@@ -1,8 +1,12 @@
 package com.expenseTracker.backend.services;
 
+import com.expenseTracker.backend.customExceptions.UserNameExistsException;
 import com.expenseTracker.backend.customExceptions.UserNotFoundException;
 import com.expenseTracker.backend.entities.UserEntity;
 import com.expenseTracker.backend.repositories.UserRepository;
+
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
@@ -17,7 +21,11 @@ public class UserService {
     }
     
     //register the user
-    public UserEntity registerUser(UserEntity user) {
+    public UserEntity registerUser(UserEntity user) throws UserNameExistsException {
+    	UserEntity existingUser = this.getUserByUsername(user.getUserName());
+    	if(existingUser==null) {
+			throw new UserNameExistsException("Username already found");
+		}
     	UserEntity savedUser=userRepository.save(user);
     	return savedUser;
     }

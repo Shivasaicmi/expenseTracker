@@ -29,13 +29,13 @@ public class UserController {
     
 	@PostMapping("/register")
 	public ResponseEntity<?> userRegister(@RequestBody UserEntity user) {
-		UserEntity existingUser = userService.getUserByUsername(user.getUserName());
-		if(existingUser==null) {
+		try {
 			UserEntity savedUser=userService.registerUser(user);
 			return new ResponseEntity<>(savedUser,HttpStatus.OK);
 		}
-		else {
-			return new ResponseEntity<>("Username already exists",HttpStatus.BAD_REQUEST);
+		catch(Exception e) {
+			ErrorResponse error = new ErrorResponse(HttpStatus.BAD_REQUEST,"Username already exists");
+            return new ResponseEntity<>(error,HttpStatus.BAD_REQUEST);
 		}
 	}
   
