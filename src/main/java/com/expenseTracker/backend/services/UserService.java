@@ -16,6 +16,12 @@ public class UserService {
     public UserService(UserRepository userRepository){
         this.userRepository = userRepository;
     }
+    
+    //register the user
+    public UserEntity registerUser(UserEntity user) {
+    	UserEntity savedUser=userRepository.save(user);
+    	return savedUser;
+    }
 
     // login the user
     public UserEntity userLogin(UserEntity user) throws UserNotFoundException {
@@ -27,7 +33,13 @@ public class UserService {
            throw new UserNotFoundException("Wrong credentials");
        }
     }
-
-    //register the user
-
+    
+    //get the user by username
+    public UserEntity getUserByUsername(String username) {
+ 	   Optional<UserEntity> user = userRepository.findByUserName(username);
+ 	   if(user.isPresent())
+ 		   return user.get();
+ 	   else
+ 		   return null;
+    }
 }
