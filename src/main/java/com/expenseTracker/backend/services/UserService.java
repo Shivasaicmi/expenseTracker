@@ -4,15 +4,23 @@ import com.expenseTracker.backend.customExceptions.UserNotFoundException;
 import com.expenseTracker.backend.entities.UserEntity;
 import com.expenseTracker.backend.repositories.UserRepository;
 import org.apache.catalina.User;
+import org.springframework.stereotype.Service;
 
 import java.util.Optional;
 
+@Service
 public class UserService {
 
     private UserRepository userRepository;
 
     public UserService(UserRepository userRepository){
         this.userRepository = userRepository;
+    }
+    
+    //register the user
+    public UserEntity registerUser(UserEntity user) {
+    	UserEntity savedUser=userRepository.save(user);
+    	return savedUser;
     }
 
     // login the user
@@ -25,7 +33,13 @@ public class UserService {
            throw new UserNotFoundException("Wrong credentials");
        }
     }
-
-    //register the user
-
+    
+    //get the user by username
+    public UserEntity getUserByUsername(String username) {
+ 	   Optional<UserEntity> user = userRepository.findByUserName(username);
+ 	   if(user.isPresent())
+ 		   return user.get();
+ 	   else
+ 		   return null;
+    }
 }
