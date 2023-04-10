@@ -5,6 +5,8 @@ import com.expenseTracker.backend.repositories.TransactionRepository;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.List;
+import java.util.Optional;
 
 @Service
 public class TransactionService {
@@ -15,20 +17,23 @@ public class TransactionService {
         this.transactionRepository = transactionRepository;
     }
 
-    // add a transaction
-
     public TransactionEntity addTransaction(TransactionEntity newTransaction){
         newTransaction.setCreatedOn(LocalDateTime.now());
         TransactionEntity addedTransaction =  transactionRepository.save(newTransaction);
         return addedTransaction;
     }
 
-    // delete a transaction
+    public void deleteTransactionById(Long transactionId){
+        transactionRepository.deleteById(transactionId);
+    }
 
-    // update a transaction
-
-    // get transaction by UserId
-
-    // get transaction by transaction id
-
+    public List<TransactionEntity> getTransactionsByUserId(Long userId)throws Exception{
+        Optional<List<TransactionEntity>> result = transactionRepository.findByUserId(userId);
+        if(result.isPresent()){
+            return result.get();
+        }
+        else{
+            throw new Exception("this user doesnot have any transactions");
+        }
+    }
 }

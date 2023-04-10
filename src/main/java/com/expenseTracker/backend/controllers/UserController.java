@@ -2,16 +2,17 @@ package com.expenseTracker.backend.controllers;
 
 
 import com.expenseTracker.backend.customExceptions.UserNameExistsException;
+import com.expenseTracker.backend.entities.TransactionEntity;
 import com.expenseTracker.backend.entities.UserEntity;
+import com.expenseTracker.backend.services.TransactionService;
 import com.expenseTracker.backend.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import com.expenseTracker.backend.models.ErrorResponse;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/users")
@@ -20,10 +21,12 @@ public class UserController {
 
 
   private UserService userService;
+  private TransactionService transactionService;
 
     @Autowired
-    public UserController(UserService userService){
+    public UserController(UserService userService,TransactionService transactionService){
         this.userService = userService;
+        this.transactionService = transactionService;
     }
     
     
@@ -53,5 +56,18 @@ public class UserController {
         }
     }
 
+    @GetMapping("/transaction/{userId}")
+    public ResponseEntity<?> getTransactionByUserId(@PathVariable Long userId){
+
+        try{
+            List<TransactionEntity> transactions = transactionService.getTransactionsByUserId(userId);
+            return new ResponseEntity<>(transactions,HttpStatus.OK);
+        }
+        catch (Exception exc){
+            ErrorResponse error = new ErrorResponse(HttpStatus.NOT_FOUND, exc.getMessage());
+            return new ResponseEntity<>(error,HttpStatus.NOT_FOUND);
+        }
+
+    }
 
 }

@@ -6,10 +6,7 @@ import com.expenseTracker.backend.services.TransactionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/transactions")
@@ -22,6 +19,7 @@ public class TransactionController {
         this.transactionService = transactionService;
     }
 
+
     @PostMapping("/")
     public ResponseEntity<?> addTransaction(@RequestBody TransactionEntity newTransaction){
         try{
@@ -33,6 +31,18 @@ public class TransactionController {
             return new ResponseEntity<>(error,HttpStatus.INTERNAL_SERVER_ERROR);
         }
 
+    }
+
+    @DeleteMapping("/{transactionId}")
+    public ResponseEntity<?> deleteTransaction(@PathVariable Long transactionId){
+        try{
+            transactionService.deleteTransactionById(transactionId);
+            return new ResponseEntity<>("transaction with transactionId "+transactionId,HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+        catch (Exception exc){
+            ErrorResponse error = new ErrorResponse(HttpStatus.INTERNAL_SERVER_ERROR,exc.getMessage());
+            return new ResponseEntity<>(error,HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 
 }

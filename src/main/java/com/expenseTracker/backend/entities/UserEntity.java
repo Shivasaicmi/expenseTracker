@@ -12,7 +12,7 @@ public class UserEntity {
 
     @Column(name="id")
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long userId;
 
     @Column(name="username",unique = true,nullable = false)

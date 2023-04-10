@@ -23,7 +23,7 @@ public class UserService {
     //register the user
     public UserEntity registerUser(UserEntity user) throws UserNameExistsException {
     	UserEntity existingUser = this.getUserByUsername(user.getUserName());
-    	if(existingUser==null) {
+    	if(existingUser!=null) {
 			throw new UserNameExistsException("Username already found");
 		}
     	UserEntity savedUser=userRepository.save(user);
@@ -44,6 +44,7 @@ public class UserService {
     //get the user by username
     public UserEntity getUserByUsername(String username) {
  	   Optional<UserEntity> user = userRepository.findByUserName(username);
+
  	   if(user.isPresent())
  		   return user.get();
  	   else

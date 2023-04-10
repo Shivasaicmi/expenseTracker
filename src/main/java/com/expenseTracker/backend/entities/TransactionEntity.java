@@ -1,5 +1,6 @@
 package com.expenseTracker.backend.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 import java.time.LocalDateTime;
@@ -54,6 +55,7 @@ public class TransactionEntity {
         this.userId = userId;
     }
 
+    @JsonIgnore
     public UserEntity getUser() {
         return user;
     }
