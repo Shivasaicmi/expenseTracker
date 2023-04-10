@@ -4,8 +4,11 @@ package com.expenseTracker.backend.controllers;
 import com.expenseTracker.backend.customExceptions.UserNameExistsException;
 import com.expenseTracker.backend.entities.TransactionEntity;
 import com.expenseTracker.backend.entities.UserEntity;
+import com.expenseTracker.backend.repositories.CategoryRepository;
+import com.expenseTracker.backend.services.CategoriesService;
 import com.expenseTracker.backend.services.TransactionService;
 import com.expenseTracker.backend.services.UserService;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -23,8 +26,10 @@ public class UserController {
   private UserService userService;
   private TransactionService transactionService;
 
+
+
     @Autowired
-    public UserController(UserService userService,TransactionService transactionService){
+    public UserController(UserService userService, TransactionService transactionService){
         this.userService = userService;
         this.transactionService = transactionService;
     }
@@ -37,7 +42,7 @@ public class UserController {
 			return new ResponseEntity<>(savedUser,HttpStatus.OK);
 		}
 		catch(Exception e) {
-			ErrorResponse error = new ErrorResponse(HttpStatus.BAD_REQUEST,"Username already exists");
+			ErrorResponse error = new ErrorResponse(HttpStatus.BAD_REQUEST,e.getMessage());
             return new ResponseEntity<>(error,HttpStatus.BAD_REQUEST);
 		}
 	}
