@@ -3,7 +3,6 @@ package com.expenseTracker.backend.services;
 import com.expenseTracker.backend.customExceptions.UserNotFoundException;
 import com.expenseTracker.backend.entities.UserEntity;
 import com.expenseTracker.backend.repositories.UserRepository;
-import org.apache.catalina.User;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
