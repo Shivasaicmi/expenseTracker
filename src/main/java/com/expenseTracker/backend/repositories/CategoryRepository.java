@@ -1,5 +1,6 @@
 package com.expenseTracker.backend.repositories;
 
+import com.expenseTracker.backend.entities.BudgetEntity;
 import com.expenseTracker.backend.entities.CategoriesEntity;
 
 import jakarta.transaction.Transactional;
@@ -10,6 +11,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 
 public interface CategoryRepository extends JpaRepository<CategoriesEntity,Long> {
@@ -27,6 +29,12 @@ public interface CategoryRepository extends JpaRepository<CategoriesEntity,Long>
             nativeQuery = true
     )
     void updateCategories(@Param("userId") Long userId,@Param("newCategories") String[] set);
+    
+    @Query(
+			value = "select * from categories where :category=ANY(categories) and userid=:userId",
+			nativeQuery = true
+	)
+	Optional<CategoriesEntity> isExists(@Param("userId") long userId,@Param("category") String category);
     
     CategoriesEntity[] findByUserId(Long userId);
 

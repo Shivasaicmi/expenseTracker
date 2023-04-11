@@ -12,9 +12,4 @@ import com.expenseTracker.backend.entities.BudgetEntity;
 @Repository
 public interface BudgetRepository extends JpaRepository<BudgetEntity,Long>{
 
-	@Query(
-			value = "select * from categories where :category=ANY(categories) and userid=:userId",
-			nativeQuery = true
-	)
-	Optional<BudgetEntity> isExists(@Param("userId") long userId,@Param("category") String category);
 }
