@@ -30,7 +30,7 @@ public class BudgetController {
 			return new ResponseEntity<>(savedBudget,HttpStatus.OK);
 		}
 		catch (Exception e) {
-			return new ResponseEntity<>(e.getMessage(),HttpStatus.INTERNAL_SERVER_ERROR);
+			return new ResponseEntity<>(new ErrorResponse(HttpStatus.INTERNAL_SERVER_ERROR, e.getMessage()),HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
 

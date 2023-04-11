@@ -39,6 +39,10 @@ public class CategoriesService {
 	}
 
 	public boolean isUserHasCategory(long userId,String category) {
-		Optional<BudgetEntity>
+		Optional<CategoriesEntity> categoryEntity=categoryRepository.isExists(userId, category);
+		if(categoryEntity.isPresent())
+			return true;
+		else
+			return false;
 	}
 }
