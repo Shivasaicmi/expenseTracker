@@ -18,27 +18,25 @@ import com.expenseTracker.backend.services.CategoriesService;
 public class CategoryController {
 
 	private CategoriesService categoriesService;
-	
+
 	@Autowired
-    public CategoryController(CategoriesService categoriesService) {
+	public CategoryController(CategoriesService categoriesService) {
 		super();
 		this.categoriesService = categoriesService;
 	}
 
-
-
 	@PutMapping("/")
-    public ResponseEntity<?> updateCategories(@RequestBody CategoriesEntity categories){
-    	try {
-    		System.out.println("before updating");
-    		categoriesService.updateCategories(categories);
-    		System.out.println("after updating2");
-    		CategoriesEntity saveCategories=categoriesService.getCategoriesByUserId(categories.getUserId())[0];
-    		return new ResponseEntity<>(saveCategories,HttpStatus.OK);
-    	}
-    	catch(Exception e) {
-    		return new ResponseEntity<>(new ErrorResponse(HttpStatus.BAD_REQUEST,"Unable to update categories"),HttpStatus.BAD_REQUEST);
-    	}
-    }
+	public ResponseEntity<?> updateCategories(@RequestBody CategoriesEntity categories) {
+		try {
+			System.out.println(categories.toString());
+			categoriesService.updateCategories(categories);
+			CategoriesEntity saveCategories = categoriesService.findCategoriesByUserId(categories.getUserId())[0];
+			return new ResponseEntity<>(saveCategories, HttpStatus.OK);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return new ResponseEntity<>(new ErrorResponse(HttpStatus.BAD_REQUEST, "Unable to update categories"),
+					HttpStatus.BAD_REQUEST);
+		}
+	}
 
 }
