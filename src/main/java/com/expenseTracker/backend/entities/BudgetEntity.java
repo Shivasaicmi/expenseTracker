@@ -12,7 +12,7 @@ import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "budget")
-public class Budget {
+public class BudgetEntity {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -31,14 +31,14 @@ public class Budget {
 	@Column(name = "price")
 	private long price;
 
-	public Budget(long userId, String category, long price) {
+	public BudgetEntity(long userId, String category, long price) {
 		super();
 		this.userId = userId;
 		this.category = category;
 		this.price = price;
 	}
 
-	public Budget() {
+	public BudgetEntity() {
 		super();
 	}
 

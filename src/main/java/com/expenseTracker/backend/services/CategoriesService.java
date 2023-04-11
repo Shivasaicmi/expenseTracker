@@ -27,7 +27,6 @@ public class CategoriesService {
 	// update a category list
 	@Transactional
 	public void updateCategories(CategoriesEntity categories) {
-		CategoriesEntity categoriesEntity = new CategoriesEntity();
 		categoryRepository.updateCategories(categories.getUserId(),
 				categories.getCategories().toArray(new String[categories.getCategories().size()]));
 	}
