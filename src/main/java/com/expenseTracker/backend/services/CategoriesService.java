@@ -1,5 +1,6 @@
 package com.expenseTracker.backend.services;
 
+import com.expenseTracker.backend.entities.CategoriesEntity;
 import com.expenseTracker.backend.repositories.CategoryRepository;
 import org.springframework.stereotype.Service;
 
@@ -19,9 +20,15 @@ public class CategoriesService {
     }
 
     // update a category list
-    public String[] updateCategories(Long userId,String[] newCategories){
-        String[] categories =  categoryRepository.appendCategories(userId,newCategories);
-        return categories;
+    public void updateCategories(CategoriesEntity categories){
+//        categoryRepository.appendCategories(categories.getUserId(),categories.getCategories());
+        String[] category={"movies","food","shopping","travel"};
+        categoryRepository.appendCategories(1L, category);
+        System.out.println("after updating");
+    }
+    
+    public CategoriesEntity[] getCategoriesByUserId(Long userId) {
+    	return categoryRepository.findByUserId(userId);
     }
 
     // delete a category from categories list

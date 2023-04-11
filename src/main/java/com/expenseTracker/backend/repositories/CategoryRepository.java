@@ -22,6 +22,8 @@ public interface CategoryRepository extends JpaRepository<CategoriesEntity,Long>
             value = " UPDATE categories SET categories = ARRAY_CAT(categories,:newCategories) where userid=:userId ",
             nativeQuery = true
     )
-    String[] appendCategories(@Param("userId") Long userId,@Param("newCategories") String[] newCategories);
+    void appendCategories(@Param("userId") Long userId,@Param("newCategories") String[] newCategories);
+    
+    CategoriesEntity[] findByUserId(Long userId);
 
 }
