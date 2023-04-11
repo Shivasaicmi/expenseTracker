@@ -28,6 +28,6 @@ public interface CategoryRepository extends JpaRepository<CategoriesEntity,Long>
     )
     void updateCategories(@Param("userId") Long userId,@Param("newCategories") String[] set);
     
-    CategoriesEntity[] findByUserId(Long userId);
+    CategoriesEntity findByUserId(Long userId);
 
 }
