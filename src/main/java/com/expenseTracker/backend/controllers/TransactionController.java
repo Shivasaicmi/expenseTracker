@@ -46,7 +46,19 @@ public class TransactionController {
 
 	@PostMapping("/room/{roomId}")
 	public ResponseEntity<?> addTransactionInRoom(@RequestBody TransactionEntity transactionEntity,@PathVariable Long roomId){
-		return new ResponseEntity<>("yet to be implemented",HttpStatus.OK);
+		try{
+			transactionService.addTransactionByRoomId(transactionEntity,roomId);
+			return new ResponseEntity<>("added transaction underRoom Id ",HttpStatus.OK);
+		}
+		catch (Exception exc){
+			return new ResponseEntity<>("failed to add transaction ",HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+
 	}
 
 }
+// add a transaction under this room
+// get all transactions of a room
+
+// reset expenditure to 0
+// get list of rooms under his id

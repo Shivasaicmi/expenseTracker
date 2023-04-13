@@ -46,7 +46,7 @@ public class TransactionEntity {
     private Long groupId;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name="room_id",updatable = false,insertable = false)
+    @JoinColumn(name="room_id",referencedColumnName = "id",updatable = false,insertable = false)
     private RoomEntity room;
 
     @ManyToOne(fetch = FetchType.LAZY)
@@ -124,6 +124,38 @@ public class TransactionEntity {
 
     public void setCategory(String category) {
         this.category = category;
+    }
+
+    public Long getRoomId() {
+        return roomId;
+    }
+
+    public void setRoomId(Long roomId) {
+        this.roomId = roomId;
+    }
+
+    public Long getGroupId() {
+        return groupId;
+    }
+
+    public void setGroupId(Long groupId) {
+        this.groupId = groupId;
+    }
+
+    public RoomEntity getRoom() {
+        return room;
+    }
+
+    public void setRoom(RoomEntity room) {
+        this.room = room;
+    }
+
+    public SplitBillEntity getSplitBills() {
+        return splitBills;
+    }
+
+    public void setSplitBills(SplitBillEntity splitBills) {
+        this.splitBills = splitBills;
     }
 
     @Override

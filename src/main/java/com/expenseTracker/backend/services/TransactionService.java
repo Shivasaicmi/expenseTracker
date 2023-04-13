@@ -1,7 +1,10 @@
 package com.expenseTracker.backend.services;
 
 import com.expenseTracker.backend.entities.TransactionEntity;
+import com.expenseTracker.backend.entities.UserRoomsEntity;
+import com.expenseTracker.backend.repositories.RoomsRepository;
 import com.expenseTracker.backend.repositories.TransactionRepository;
+import com.expenseTracker.backend.repositories.UserRoomsRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
@@ -13,9 +16,14 @@ import java.util.Optional;
 public class TransactionService {
 
     private TransactionRepository transactionRepository;
+    private UserRoomsRepository userRoomsRepository;
 
-    public TransactionService(TransactionRepository transactionRepository){
+    private RoomsRepository roomsRepository;
+
+    public TransactionService(TransactionRepository transactionRepository,UserRoomsRepository userRoomsRepository,RoomsRepository roomsRepository){
         this.transactionRepository = transactionRepository;
+        this.userRoomsRepository = userRoomsRepository;
+        this.roomsRepository = roomsRepository;
     }
 
     public TransactionEntity addTransaction(TransactionEntity newTransaction){
@@ -39,7 +47,17 @@ public class TransactionService {
     }
 
     @Transactional
-    public void addTransactionByRoomId(TransactionEntity transactionEntity,Long roomId){
+    public void addTransactionByRoomId(TransactionEntity transactionEntity,Long roomId) throws Exception {
+        Optional<UserRoomsEntity> legitUserRelation = userRoomsRepository.findByRoomIdAndUserId(roomId,transactionEntity.getUserId());
+        if(legitUserRelation.isPresent()){
+            transactionEntity.setRoomId(roomId);
+            transactionEntity.setCreatedOn(LocalDateTime.now());
+            transactionRepository.save(transactionEntity);
+            roomsRepository.updateExpenditureById(roomId,transactionEntity.getPrice());
+        }
+        else{
+            throw new Exception("user can't add transaction he does not belong to this room");
+        }
 
     }
 
