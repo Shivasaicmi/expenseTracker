@@ -37,7 +37,21 @@ public class TransactionEntity {
     private LocalDateTime addedOn;
 
     @Column(name="category")
-    private String Category;
+    private String category;
+
+    @Column(name="room_id")
+    private Long roomId;
+
+    @Column(name="group_id")
+    private Long groupId;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name="room_id",updatable = false,insertable = false)
+    private RoomEntity room;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "group_id",updatable = false,insertable = false)
+    private SplitBillEntity splitBills;
 
     public Long getTransactionId() {
         return transactionId;
@@ -105,11 +119,11 @@ public class TransactionEntity {
     }
 
     public String getCategory() {
-        return Category;
+        return category;
     }
 
     public void setCategory(String category) {
-        Category = category;
+        this.category = category;
     }
 
     @Override
@@ -123,7 +137,7 @@ public class TransactionEntity {
                 ", price=" + price +
                 ", createdOn=" + createdOn +
                 ", addedOn=" + addedOn +
-                ", Category='" + Category + '\'' +
+                ", Category='" + category + '\'' +
                 '}';
     }
 }
