@@ -2,6 +2,7 @@ package com.expenseTracker.backend.services;
 
 import com.expenseTracker.backend.entities.TransactionEntity;
 import com.expenseTracker.backend.repositories.TransactionRepository;
+import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -36,4 +37,10 @@ public class TransactionService {
             throw new Exception("this user doesnot have any transactions");
         }
     }
+
+    @Transactional
+    public void addTransactionByRoomId(TransactionEntity transactionEntity,Long roomId){
+
+    }
+
 }
