@@ -28,14 +28,18 @@ public class BudgetEntity {
 	@Column(name = "category")
 	private String category;
 	
-	@Column(name = "price")
-	private long price;
+	@Column(name = "total_budget")
+	private long totalBudget;
+	
+	@Column(name = "expenditure")
+	private long expenditure;
 
-	public BudgetEntity(long userId, String category, long price) {
+	public BudgetEntity(long userId, String category, long totalBudget, long expenditure) {
 		super();
 		this.userId = userId;
 		this.category = category;
-		this.price = price;
+		this.totalBudget = totalBudget;
+		this.expenditure = expenditure;
 	}
 
 	public BudgetEntity() {
@@ -66,16 +70,25 @@ public class BudgetEntity {
 		this.category = category;
 	}
 
-	public long getPrice() {
-		return price;
+	public long getTotalBudget() {
+		return totalBudget;
 	}
 
-	public void setPrice(long price) {
-		this.price = price;
+	public void setTotalBudget(long totalBudget) {
+		this.totalBudget = totalBudget;
+	}
+
+	public long getExpenditure() {
+		return expenditure;
+	}
+
+	public void setExpenditure(long expenditure) {
+		this.expenditure = expenditure;
 	}
 
 	@Override
 	public String toString() {
-		return "Budget [id=" + id + ", userId=" + userId + ", category=" + category + ", price=" + price + "]";
+		return "BudgetEntity [id=" + id + ", userId=" + userId + ", user=" + user + ", category=" + category
+				+ ", totalBudget=" + totalBudget + ", expenditure=" + expenditure + "]";
 	}
 }
