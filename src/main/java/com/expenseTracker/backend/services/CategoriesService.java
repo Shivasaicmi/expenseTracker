@@ -1,9 +1,12 @@
 package com.expenseTracker.backend.services;
 
+import com.expenseTracker.backend.entities.BudgetEntity;
 import com.expenseTracker.backend.entities.CategoriesEntity;
 import com.expenseTracker.backend.repositories.CategoryRepository;
 
 import jakarta.transaction.Transactional;
+
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -41,5 +44,11 @@ public class CategoriesService {
 		return categoryRepository.findByUserId(userId);
 	}
 
-
+	public boolean isUserHasCategory(long userId,String category) {
+		Optional<CategoriesEntity> categoryEntity=categoryRepository.isExists(userId, category);
+		if(categoryEntity.isPresent())
+			return true;
+		else
+			return false;
+	}
 }
