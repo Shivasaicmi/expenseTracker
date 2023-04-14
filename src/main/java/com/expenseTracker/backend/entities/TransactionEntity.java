@@ -17,7 +17,7 @@ public class TransactionEntity {
     @Column(name="userid")
     private Long userId;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name="userid",referencedColumnName = "id",updatable = false,insertable = false)
     private UserEntity user;
 
@@ -42,9 +42,6 @@ public class TransactionEntity {
     @Column(name="room_id")
     private Long roomId;
 
-    @Column(name="group_id")
-    private Long groupId;
-
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="room_id",referencedColumnName = "id",updatable = false,insertable = false)
     private RoomEntity room;
@@ -52,6 +49,18 @@ public class TransactionEntity {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "group_id",updatable = false,insertable = false)
     private SplitBillEntity splitBills;
+
+
+
+    public UserEntity getUser() {
+        return user;
+    }
+
+
+    public void setUser(UserEntity user) {
+        System.out.println("setting by a setter");
+        this.user = user;
+    }
 
     public Long getTransactionId() {
         return transactionId;
@@ -67,15 +76,6 @@ public class TransactionEntity {
 
     public void setUserId(Long userId) {
         this.userId = userId;
-    }
-
-    @JsonIgnore
-    public UserEntity getUser() {
-        return user;
-    }
-
-    public void setUser(UserEntity user) {
-        this.user = user;
     }
 
     public String getTitle() {
@@ -134,14 +134,8 @@ public class TransactionEntity {
         this.roomId = roomId;
     }
 
-    public Long getGroupId() {
-        return groupId;
-    }
 
-    public void setGroupId(Long groupId) {
-        this.groupId = groupId;
-    }
-
+    @JsonIgnore
     public RoomEntity getRoom() {
         return room;
     }
@@ -153,6 +147,7 @@ public class TransactionEntity {
     public SplitBillEntity getSplitBills() {
         return splitBills;
     }
+
 
     public void setSplitBills(SplitBillEntity splitBills) {
         this.splitBills = splitBills;
@@ -170,6 +165,6 @@ public class TransactionEntity {
                 ", createdOn=" + createdOn +
                 ", addedOn=" + addedOn +
                 ", Category='" + category + '\'' +
-                '}';
+                "}\n";
     }
 }

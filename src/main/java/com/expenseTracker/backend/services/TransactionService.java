@@ -48,8 +48,7 @@ public class TransactionService {
 
     @Transactional
     public void addTransactionByRoomId(TransactionEntity transactionEntity,Long roomId) throws Exception {
-        Optional<UserRoomsEntity> legitUserRelation = userRoomsRepository.findByRoomIdAndUserId(roomId,transactionEntity.getUserId());
-        if(legitUserRelation.isPresent()){
+        if(this.isUserBelongsToRoom(roomId,transactionEntity.getUserId())){
             transactionEntity.setRoomId(roomId);
             transactionEntity.setCreatedOn(LocalDateTime.now());
             transactionRepository.save(transactionEntity);
@@ -59,6 +58,28 @@ public class TransactionService {
             throw new Exception("user can't add transaction he does not belong to this room");
         }
 
+    }
+
+    @Transactional
+    public boolean isUserBelongsToRoom(Long roomId,Long userId){
+        Optional<UserRoomsEntity> legitUserRelation = userRoomsRepository.findByRoomIdAndUserId(roomId,userId);
+        return legitUserRelation.isPresent();
+    }
+
+    @Transactional
+    public List<TransactionEntity> getTransactionsByRoomId(Long roomId,Long userId) throws Exception {
+        if(isUserBelongsToRoom(roomId,userId)){
+           Optional<List<TransactionEntity>> transactionEntitiesResult = transactionRepository.gettbyuar(userId,roomId);
+           if(transactionEntitiesResult.isPresent()){
+               return transactionEntitiesResult.get();
+           }
+           else{
+               throw  new Exception("no transactions found");
+           }
+        }
+        else{
+            throw new Exception("user doesnot belong to this room");
+        }
     }
 
 }
