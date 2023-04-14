@@ -17,6 +17,6 @@ public interface TransactionRepository extends JpaRepository<TransactionEntity,L
             nativeQuery = true,
             value = "SELECT * FROM transactions WHERE userId = :userId AND room_id=:roomId"
     )
-    Optional<List<TransactionEntity>> gettbyuar(@Param("userId") Long userId,@Param("roomId") Long roomId);
+    Optional<List<TransactionEntity>> findByUseridAndRoomid(@Param("userId") Long userId,@Param("roomId") Long roomId);
 
 }

@@ -17,7 +17,7 @@ public class TransactionEntity {
     @Column(name="userid")
     private Long userId;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name="userid",referencedColumnName = "id",updatable = false,insertable = false)
     private UserEntity user;
 
