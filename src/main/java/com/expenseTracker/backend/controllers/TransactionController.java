@@ -61,7 +61,6 @@ public class TransactionController {
 	{
 		try{
 			 List<TransactionEntity> transactions = transactionService.getTransactionsByRoomId(roomId,userId);
-			System.out.println(transactions);
 			 return new ResponseEntity<>(transactions,HttpStatus.OK);
 		}
 		catch (Exception exc){

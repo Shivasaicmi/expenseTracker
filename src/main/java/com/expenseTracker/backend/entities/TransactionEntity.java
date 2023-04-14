@@ -17,7 +17,7 @@ public class TransactionEntity {
     @Column(name="userid")
     private Long userId;
 
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="userid",referencedColumnName = "id",updatable = false,insertable = false)
     private UserEntity user;
 
@@ -158,7 +158,6 @@ public class TransactionEntity {
         return "TransactionEntity{" +
                 "transactionId=" + transactionId +
                 ", userId=" + userId +
-                ", user=" + user +
                 ", title='" + title + '\'' +
                 ", description='" + description + '\'' +
                 ", price=" + price +
