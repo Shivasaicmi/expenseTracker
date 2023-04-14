@@ -1,5 +1,6 @@
 package com.expenseTracker.backend.services;
 
+import com.expenseTracker.backend.customExceptions.CategoryNotFoundException;
 import com.expenseTracker.backend.entities.TransactionEntity;
 import com.expenseTracker.backend.entities.UserRoomsEntity;
 import com.expenseTracker.backend.repositories.RoomsRepository;
@@ -16,20 +17,36 @@ import java.util.Optional;
 public class TransactionService {
 
     private TransactionRepository transactionRepository;
+    private BudgetService budgetService;
     private UserRoomsRepository userRoomsRepository;
 
     private RoomsRepository roomsRepository;
 
-    public TransactionService(TransactionRepository transactionRepository,UserRoomsRepository userRoomsRepository,RoomsRepository roomsRepository){
+    @Autowired
+    public TransactionService(TransactionRepository transactionRepository,UserRoomsRepository userRoomsRepository,RoomsRepository roomsRepository, BudgetService budgetService){
         this.transactionRepository = transactionRepository;
         this.userRoomsRepository = userRoomsRepository;
         this.roomsRepository = roomsRepository;
+        this.budgetService = budgetService;
     }
 
     public TransactionEntity addTransaction(TransactionEntity newTransaction){
         newTransaction.setCreatedOn(LocalDateTime.now());
         TransactionEntity addedTransaction =  transactionRepository.save(newTransaction);
         return addedTransaction;
+    }
+    
+    @Transactional
+    public TransactionEntity addPersonalTransaction(TransactionEntity transaction) {
+    	TransactionEntity savedTransaction = transactionRepository.save(transaction);
+    	if(budgetService.findByUserIdAndCategory(transaction.getUserId(), transaction.getCategory())) {
+			long price = (long) (transaction.getPrice()*1L);
+			try {
+				budgetService.addExpense(transaction.getUserId(), transaction.getCategory(), price);
+			}
+			catch(CategoryNotFoundException e) {}
+		}
+    	return savedTransaction;
     }
 
     public void deleteTransactionById(Long transactionId){
