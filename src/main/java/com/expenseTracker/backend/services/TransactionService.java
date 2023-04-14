@@ -2,7 +2,10 @@ package com.expenseTracker.backend.services;
 
 import com.expenseTracker.backend.customExceptions.CategoryNotFoundException;
 import com.expenseTracker.backend.entities.TransactionEntity;
+import com.expenseTracker.backend.entities.UserRoomsEntity;
+import com.expenseTracker.backend.repositories.RoomsRepository;
 import com.expenseTracker.backend.repositories.TransactionRepository;
+import com.expenseTracker.backend.repositories.UserRoomsRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
@@ -15,9 +18,15 @@ public class TransactionService {
 
     private TransactionRepository transactionRepository;
     private BudgetService budgetService;
+    private UserRoomsRepository userRoomsRepository;
 
-    public TransactionService(TransactionRepository transactionRepository, BudgetService budgetService){
+    private RoomsRepository roomsRepository;
+
+    @Autowired
+    public TransactionService(TransactionRepository transactionRepository,UserRoomsRepository userRoomsRepository,RoomsRepository roomsRepository, BudgetService budgetService){
         this.transactionRepository = transactionRepository;
+        this.userRoomsRepository = userRoomsRepository;
+        this.roomsRepository = roomsRepository;
         this.budgetService = budgetService;
     }
 
@@ -55,8 +64,39 @@ public class TransactionService {
     }
 
     @Transactional
-    public void addTransactionByRoomId(TransactionEntity transactionEntity,Long roomId){
+    public void addTransactionByRoomId(TransactionEntity transactionEntity,Long roomId) throws Exception {
+        if(this.isUserBelongsToRoom(roomId,transactionEntity.getUserId())){
+            transactionEntity.setRoomId(roomId);
+            transactionEntity.setCreatedOn(LocalDateTime.now());
+            transactionRepository.save(transactionEntity);
+            roomsRepository.updateExpenditureById(roomId,transactionEntity.getPrice());
+        }
+        else{
+            throw new Exception("user can't add transaction he does not belong to this room");
+        }
 
+    }
+
+    @Transactional
+    public boolean isUserBelongsToRoom(Long roomId,Long userId){
+        Optional<UserRoomsEntity> legitUserRelation = userRoomsRepository.findByRoomIdAndUserId(roomId,userId);
+        return legitUserRelation.isPresent();
+    }
+
+    @Transactional
+    public List<TransactionEntity> getTransactionsByRoomId(Long roomId,Long userId) throws Exception {
+        if(isUserBelongsToRoom(roomId,userId)){
+           Optional<List<TransactionEntity>> transactionEntitiesResult = transactionRepository.gettbyuar(userId,roomId);
+           if(transactionEntitiesResult.isPresent()){
+               return transactionEntitiesResult.get();
+           }
+           else{
+               throw  new Exception("no transactions found");
+           }
+        }
+        else{
+            throw new Exception("user doesnot belong to this room");
+        }
     }
 
 }

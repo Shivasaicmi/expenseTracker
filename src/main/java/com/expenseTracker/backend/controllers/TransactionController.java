@@ -8,6 +8,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/transactions")
 public class TransactionController {
@@ -43,10 +45,32 @@ public class TransactionController {
 		}
 	}
 
-
 	@PostMapping("/room/{roomId}")
 	public ResponseEntity<?> addTransactionInRoom(@RequestBody TransactionEntity transactionEntity,@PathVariable Long roomId){
-		return new ResponseEntity<>("yet to be implemented",HttpStatus.OK);
+		try{
+			transactionService.addTransactionByRoomId(transactionEntity,roomId);
+			return new ResponseEntity<>("added transaction underRoom Id ",HttpStatus.OK);
+		}
+		catch (Exception exc){
+			return new ResponseEntity<>("failed to add transaction ",HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+	}
+
+	@GetMapping("/room/{roomId}/{userId}")
+	public ResponseEntity<?> getTranasactionsByRoomId(@PathVariable Long roomId,@PathVariable Long userId)
+	{
+		try{
+			 List<TransactionEntity> transactions = transactionService.getTransactionsByRoomId(roomId,userId);
+			 return new ResponseEntity<>(transactions,HttpStatus.OK);
+		}
+		catch (Exception exc){
+			return new ResponseEntity<>(exc.getMessage(),HttpStatus.INTERNAL_SERVER_ERROR);
+		}
 	}
 
 }
+
+// get all transactions of a room
+
+// reset expenditure to 0
+// get list of rooms under his id

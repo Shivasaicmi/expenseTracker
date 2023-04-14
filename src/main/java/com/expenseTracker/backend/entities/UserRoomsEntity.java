@@ -42,13 +42,13 @@ public class UserRoomsEntity {
         this.userId = userId;
     }
 
-    public UserEntity getUser() {
-        return user;
-    }
-
-    public void setUser(UserEntity user) {
-        this.user = user;
-    }
+//    public UserEntity getUser() {
+//        return user;
+//    }
+//
+//    public void setUser(UserEntity user) {
+//        this.user = user;
+//    }
 
     public RoomEntity getRoom() {
         return room;
