@@ -37,6 +37,6 @@ public interface CategoryRepository extends JpaRepository<CategoriesEntity,Long>
 	)
 	Optional<CategoriesEntity> isExists(@Param("userId") long userId,@Param("category") String category);
     
-    CategoriesEntity[] findByUserId(Long userId);
+    CategoriesEntity findByUserId(Long userId);
 
 }
