@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
+import com.expenseTracker.backend.customExceptions.BudgetAlreadyFoundException;
 import com.expenseTracker.backend.customExceptions.CategoryNotFoundException;
 import com.expenseTracker.backend.customExceptions.UserNotFoundException;
 import com.expenseTracker.backend.entities.BudgetEntity;
@@ -30,7 +31,15 @@ public class BudgetService {
 	public BudgetEntity addBudget(BudgetEntity budget) throws Exception {
 		budget.setExpenditure(0);
 		if(categoriesService.isUserHasCategory(budget.getUserId(), budget.getCategory()))
-			return budgetRepository.save(budget);
+		{
+			BudgetEntity savedBudget = budgetRepository.findByUserIdAndCategory(budget.getUserId(), budget.getCategory());
+			if(savedBudget==null) {
+				return budgetRepository.save(budget);
+			}
+			else {
+				throw new BudgetAlreadyFoundException("Budget already found under userId "+budget.getUserId());
+			}
+		}
 		else
 			throw new CategoryNotFoundException("Category not found");
 	}
