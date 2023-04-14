@@ -1,5 +1,6 @@
 package com.expenseTracker.backend.services;
 
+import com.expenseTracker.backend.customExceptions.CategoryNotFoundException;
 import com.expenseTracker.backend.entities.TransactionEntity;
 import com.expenseTracker.backend.repositories.TransactionRepository;
 import jakarta.transaction.Transactional;
@@ -13,15 +14,30 @@ import java.util.Optional;
 public class TransactionService {
 
     private TransactionRepository transactionRepository;
+    private BudgetService budgetService;
 
-    public TransactionService(TransactionRepository transactionRepository){
+    public TransactionService(TransactionRepository transactionRepository, BudgetService budgetService){
         this.transactionRepository = transactionRepository;
+        this.budgetService = budgetService;
     }
 
     public TransactionEntity addTransaction(TransactionEntity newTransaction){
         newTransaction.setCreatedOn(LocalDateTime.now());
         TransactionEntity addedTransaction =  transactionRepository.save(newTransaction);
         return addedTransaction;
+    }
+    
+    @Transactional
+    public TransactionEntity addPersonalTransaction(TransactionEntity transaction) {
+    	TransactionEntity savedTransaction = transactionRepository.save(transaction);
+    	if(budgetService.findByUserIdAndCategory(transaction.getUserId(), transaction.getCategory())) {
+			long price = (long) (transaction.getPrice()*1L);
+			try {
+				budgetService.addExpense(transaction.getUserId(), transaction.getCategory(), price);
+			}
+			catch(CategoryNotFoundException e) {}
+		}
+    	return savedTransaction;
     }
 
     public void deleteTransactionById(Long transactionId){

@@ -32,8 +32,7 @@ public class BudgetService {
 		budget.setExpenditure(0);
 		if(categoriesService.isUserHasCategory(budget.getUserId(), budget.getCategory()))
 		{
-			BudgetEntity savedBudget = budgetRepository.findByUserIdAndCategory(budget.getUserId(), budget.getCategory());
-			if(savedBudget==null) {
+			if(!findByUserIdAndCategory(budget.getUserId(), budget.getCategory())) {
 				return budgetRepository.save(budget);
 			}
 			else {
@@ -80,6 +79,14 @@ public class BudgetService {
 		if(savedBudgets.size()==0)
 			throw new UserNotFoundException("User not found with id "+userId);
 		return savedBudgets;
+	}
+	
+	public boolean findByUserIdAndCategory(long userId, String category) {
+		BudgetEntity savedBudget = budgetRepository.findByUserIdAndCategory(userId, category);
+		if(savedBudget != null)
+			return true;
+		else 
+			return false;
 	}
 
 }

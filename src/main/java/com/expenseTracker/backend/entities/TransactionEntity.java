@@ -126,18 +126,27 @@ public class TransactionEntity {
         this.category = category;
     }
 
-    @Override
-    public String toString() {
-        return "TransactionEntity{" +
-                "transactionId=" + transactionId +
-                ", userId=" + userId +
-                ", user=" + user +
-                ", title='" + title + '\'' +
-                ", description='" + description + '\'' +
-                ", price=" + price +
-                ", createdOn=" + createdOn +
-                ", addedOn=" + addedOn +
-                ", Category='" + category + '\'' +
-                '}';
-    }
+    public Long getRoomId() {
+		return roomId;
+	}
+
+	public void setRoomId(Long roomId) {
+		this.roomId = roomId;
+	}
+
+	public Long getGroupId() {
+		return groupId;
+	}
+
+	public void setGroupId(Long groupId) {
+		this.groupId = groupId;
+	}
+
+	@Override
+	public String toString() {
+		return "TransactionEntity [transactionId=" + transactionId + ", userId=" + userId + ", user=" + user
+				+ ", title=" + title + ", description=" + description + ", price=" + price + ", createdOn=" + createdOn
+				+ ", addedOn=" + addedOn + ", category=" + category + ", roomId=" + roomId + ", groupId=" + groupId
+				+ ", room=" + room + ", splitBills=" + splitBills + "]";
+	}
 }

@@ -64,16 +64,4 @@ public class BudgetController {
 			return new ResponseEntity<>(new ErrorResponse(HttpStatus.INTERNAL_SERVER_ERROR, e.getMessage()), HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
-	
-	@GetMapping("/")
-	public ResponseEntity<?> findByUserId(@RequestBody BudgetEntity budget) {
-		try {
-			List<BudgetEntity> savedBudgets = budgetService.findByUserId(budget.getUserId());
-			return new ResponseEntity<>(savedBudgets,HttpStatus.OK);
-		}
-		catch (Exception e) {
-			return new ResponseEntity<>(new ErrorResponse(HttpStatus.NOT_FOUND, e.getMessage()), HttpStatus.NOT_FOUND);
-		}
-	}
-
 }
