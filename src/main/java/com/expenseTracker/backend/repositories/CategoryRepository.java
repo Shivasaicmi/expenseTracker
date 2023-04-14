@@ -30,6 +30,7 @@ public interface CategoryRepository extends JpaRepository<CategoriesEntity,Long>
     )
     void updateCategories(@Param("userId") Long userId,@Param("newCategories") String[] set);
     
+
     @Query(
 			value = "select * from categories where :category=ANY(categories) and userid=:userId",
 			nativeQuery = true

@@ -43,4 +43,10 @@ public class TransactionController {
 		}
 	}
 
+
+	@PostMapping("/room/{roomId}")
+	public ResponseEntity<?> addTransactionInRoom(@RequestBody TransactionEntity transactionEntity,@PathVariable Long roomId){
+		return new ResponseEntity<>("yet to be implemented",HttpStatus.OK);
+	}
+
 }

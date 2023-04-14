@@ -28,6 +28,7 @@ public class BudgetEntity {
 	@Column(name = "category")
 	private String category;
 	
+
 	@Column(name = "total_budget")
 	private long totalBudget;
 	
@@ -70,6 +71,7 @@ public class BudgetEntity {
 		this.category = category;
 	}
 
+
 	public long getTotalBudget() {
 		return totalBudget;
 	}
@@ -88,6 +90,7 @@ public class BudgetEntity {
 
 	@Override
 	public String toString() {
+
 		return "BudgetEntity [id=" + id + ", userId=" + userId + ", user=" + user + ", category=" + category
 				+ ", totalBudget=" + totalBudget + ", expenditure=" + expenditure + "]";
 	}
