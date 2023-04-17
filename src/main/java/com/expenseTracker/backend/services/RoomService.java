@@ -55,6 +55,13 @@ public class RoomService {
         userRoomsRepository.delete(userRoomsEntity);
     }
 
-
+    @Transactional
+    public void refreshExpenditure(UserRoomsEntity userRooms) throws Exception {
+    	Optional<UserRoomsEntity> savedUserRooms = userRoomsRepository.findByRoomIdAndUserId(userRooms.getRoomId(),userRooms.getUserId());
+    	if(savedUserRooms.isEmpty())
+    		throw new Exception("Room with id "+userRooms.getRoomId()+" does not belong to userId "+userRooms.getUserId());
+    	else
+    		roomsRepository.refreshExpenditure(userRooms.getRoomId());
+    }
 
 }

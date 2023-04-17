@@ -45,18 +45,18 @@ public class TransactionController {
 		}
 	}
 
-	@PostMapping("/room/{roomId}")
+	@PostMapping("/rooms/{roomId}")
 	public ResponseEntity<?> addTransactionInRoom(@RequestBody TransactionEntity transactionEntity,@PathVariable Long roomId){
 		try{
 			transactionService.addTransactionByRoomId(transactionEntity,roomId);
-			return new ResponseEntity<>("added transaction underRoom Id ",HttpStatus.OK);
+			return new ResponseEntity<>("added transaction under RoomId "+roomId,HttpStatus.OK);
 		}
 		catch (Exception exc){
 			return new ResponseEntity<>("failed to add transaction ",HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
 
-	@GetMapping("/room/{roomId}/{userId}")
+	@GetMapping("/rooms/{roomId}/{userId}")
 	public ResponseEntity<?> getTranasactionsByRoomId(@PathVariable Long roomId,@PathVariable Long userId)
 	{
 		try{

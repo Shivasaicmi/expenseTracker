@@ -41,7 +41,7 @@ public class BudgetController {
 		}
 	}
 	
-	@PatchMapping("/")
+	@PutMapping("/")
 	public ResponseEntity<?> updateTotalBudget(@RequestBody BudgetEntity budget) {
 		try {
 			BudgetEntity savedBudget = budgetService.updateTotalBudget(budget.getUserId(), budget.getCategory(), budget.getTotalBudget());
@@ -53,7 +53,7 @@ public class BudgetController {
 		}
 	}
 	
-	@PatchMapping("/refresh")
+	@PutMapping("/refresh")
 	public ResponseEntity<?> refreshBudget(@RequestBody BudgetEntity budget) {
 		try {
 			List<BudgetEntity> savedBudgets = budgetService.refreshBudget(budget.getUserId());

@@ -16,4 +16,11 @@ public interface RoomsRepository extends JpaRepository<RoomEntity,Long> {
             nativeQuery = true
     )
     void updateExpenditureById( @Param("roomId") Long id, @Param("value") Double value);
+    
+    @Modifying
+    @Query(
+    		value = "Update room set expenditure = 0 where id = :roomId",
+    		nativeQuery = true
+    )
+    void refreshExpenditure(@Param("roomId") long roomId);
 }

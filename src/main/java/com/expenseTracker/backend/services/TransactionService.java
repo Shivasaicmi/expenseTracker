@@ -7,6 +7,8 @@ import com.expenseTracker.backend.repositories.RoomsRepository;
 import com.expenseTracker.backend.repositories.TransactionRepository;
 import com.expenseTracker.backend.repositories.UserRoomsRepository;
 import jakarta.transaction.Transactional;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -38,6 +40,7 @@ public class TransactionService {
     
     @Transactional
     public TransactionEntity addPersonalTransaction(TransactionEntity transaction) {
+    	transaction.setCreatedOn(LocalDateTime.now());
     	TransactionEntity savedTransaction = transactionRepository.save(transaction);
     	if(budgetService.findByUserIdAndCategory(transaction.getUserId(), transaction.getCategory())) {
 			long price = (long) (transaction.getPrice()*1L);
@@ -86,7 +89,7 @@ public class TransactionService {
     @Transactional
     public List<TransactionEntity> getTransactionsByRoomId(Long roomId,Long userId) throws Exception {
         if(isUserBelongsToRoom(roomId,userId)){
-           Optional<List<TransactionEntity>> transactionEntitiesResult = transactionRepository.gettbyuar(userId,roomId);
+           Optional<List<TransactionEntity>> transactionEntitiesResult = transactionRepository.findByUseridAndRoomid(userId,roomId);
            if(transactionEntitiesResult.isPresent()){
                return transactionEntitiesResult.get();
            }
