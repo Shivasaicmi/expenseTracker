@@ -23,8 +23,9 @@ public class UserRoomsService {
 	@Transactional
 	public void deleteUserFromRoom(long userId,long roomId) throws Exception {
 		Optional<UserRoomsEntity> userRooms = userRoomsRepository.findByRoomIdAndUserId(roomId, userId);
-		if(userRooms.isPresent())
-			userRoomsRepository.deleteUserFromRoom(userId, roomId);
+		if(userRooms.isPresent()) {
+			userRoomsRepository.delete(userRooms.get());
+		}
 		else {
 			throw new Exception("User with id "+userId+" does not belong to roomId "+roomId);
 		}

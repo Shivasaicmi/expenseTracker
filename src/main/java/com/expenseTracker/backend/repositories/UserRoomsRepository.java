@@ -14,12 +14,7 @@ public interface UserRoomsRepository extends JpaRepository<UserRoomsEntity,Long>
 
     Optional<UserRoomsEntity> findByRoomIdAndUserId(Long roomId,Long userId);
     
-    //remove user from room
-    @Modifying
-    @Query(
-    	value = "DELETE from user_rooms where user_id = :userId and room_id = :roomId",
-    	nativeQuery = true
-    )
-    void deleteUserFromRoom(@Param("userId") long userId, @Param("roomId") long roomId);
+    //remove user from room    
+    void deleteByRoomIdAndUserId(@Param("roomId") long roomId, @Param("userId") long userId);
 
 }

@@ -99,5 +99,17 @@ public class UserController {
 			return new ResponseEntity<>(new ErrorResponse(HttpStatus.NOT_FOUND, e.getMessage()), HttpStatus.NOT_FOUND);
 		}
     }
+    
+    @DeleteMapping("/{userId}/budget/{category}")
+    public ResponseEntity<?> deleteBudgetForUser(@PathVariable("userId") long userId,@PathVariable("category") String category) {
+    	try {
+    		budgetService.deleteBudgetForUser(userId, category);
+    		return new ResponseEntity<>("Budget for category "+category+" for userId "+userId+" is deleted succesfully",HttpStatus.OK);
+    	}
+    	catch (Exception e) {
+    		e.printStackTrace();
+			return new ResponseEntity<>(e.getMessage(),HttpStatus.NOT_FOUND);
+		}
+    }
 
 }

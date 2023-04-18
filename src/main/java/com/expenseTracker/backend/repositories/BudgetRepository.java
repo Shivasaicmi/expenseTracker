@@ -37,6 +37,5 @@ public interface BudgetRepository extends JpaRepository<BudgetEntity,Long>{
 	
 	BudgetEntity findByUserIdAndCategory(long userId, String category);
 	
-	List<BudgetEntity> findByUserId(long userId);
-	
+	List<BudgetEntity> findByUserId(long userId);	
 }
