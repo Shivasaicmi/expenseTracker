@@ -1,6 +1,7 @@
 package com.expenseTracker.backend.repositories;
 
 import com.expenseTracker.backend.entities.TransactionEntity;
+import com.expenseTracker.backend.models.RoomTransactionModel;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -14,9 +15,33 @@ public interface TransactionRepository extends JpaRepository<TransactionEntity,L
     Optional<List<TransactionEntity>> findByUserId(Long userId);
 
     @Query(
-            nativeQuery = true,
-            value = "SELECT * FROM transactions WHERE userId = :userId AND room_id=:roomId"
+            value = "SELECT \n" +
+                    "\tt.id as transactionId,\n" +
+                    "\tt.added_on,\n" +
+                    "\tt.category,\n" +
+                    "\tt.created_on,\n" +
+                    "\tt.description,\n" +
+                    "\tt.price,\n" +
+                    "\tt.title,\n" +
+                    "\tu.username\n" +
+                    "FROM transactions t,users u WHERE t.room_id=:roomId AND t.userid=u.id;",
+            nativeQuery = true
     )
-    Optional<List<TransactionEntity>> findByUseridAndRoomid(@Param("userId") Long userId,@Param("roomId") Long roomId);
+    Optional<List<RoomTransactionModel>> findByRoomId(Long roomId);
+
+    @Query(
+            value="SELECT \n" +
+                    "\tt.id as transactionId,\n" +
+                    "\tt.added_on,\n" +
+                    "\tt.category,\n" +
+                    "\tt.created_on,\n" +
+                    "\tt.description,\n" +
+                    "\tt.price,\n" +
+                    "\tt.title,\n" +
+                    "\tu.username\n" +
+                    "FROM transactions t, users u WHERE t.room_id=:roomId AND t.userid = u.id AND u.username=:userName",
+            nativeQuery = true
+    )
+    List<RoomTransactionModel> findRoomTransactionsByUserName(@Param("userName") String userName, @Param("roomId") Long roomId);
 
 }
