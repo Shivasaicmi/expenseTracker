@@ -3,6 +3,8 @@ package com.expenseTracker.backend.services;
 import com.expenseTracker.backend.customExceptions.CategoryNotFoundException;
 import com.expenseTracker.backend.entities.TransactionEntity;
 import com.expenseTracker.backend.entities.UserRoomsEntity;
+import com.expenseTracker.backend.models.RoomTransactions;
+import com.expenseTracker.backend.models.RoomTransactions;
 import com.expenseTracker.backend.repositories.RoomsRepository;
 import com.expenseTracker.backend.repositories.TransactionRepository;
 import com.expenseTracker.backend.repositories.UserRoomsRepository;
@@ -100,6 +102,11 @@ public class TransactionService {
         else{
             throw new Exception("user doesnot belong to this room");
         }
+    }
+    
+    @Transactional
+    public List<RoomTransactions> getTransactionsByRoomIdWithUsername(long roomId) {
+    	return transactionRepository.getRoomTransactions(roomId);
     }
 
 }
