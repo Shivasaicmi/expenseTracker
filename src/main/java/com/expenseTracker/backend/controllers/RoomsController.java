@@ -3,6 +3,7 @@ package com.expenseTracker.backend.controllers;
 import com.expenseTracker.backend.entities.RoomEntity;
 import com.expenseTracker.backend.entities.UserRoomsEntity;
 import com.expenseTracker.backend.models.RoomTransactions;
+import com.expenseTracker.backend.models.RoomUsers;
 import com.expenseTracker.backend.models.RoomTransactions;
 import com.expenseTracker.backend.services.RoomService;
 import com.expenseTracker.backend.services.TransactionService;
@@ -80,6 +81,28 @@ public class RoomsController {
     public ResponseEntity<?> getTransactionsWithUsername(@PathVariable("roomId") long roomId) {
     	List<RoomTransactions> roomTransactions = transactionService.getTransactionsByRoomIdWithUsername(roomId);
     	return new ResponseEntity<>(roomTransactions,HttpStatus.OK);
+    }
+    
+    @GetMapping("/{roomId}")
+    public ResponseEntity<?> getUsers(@PathVariable("roomId") long roomId) {
+    	try {
+    		List<RoomUsers> roomUsers = userRoomsService.getByRoomId(roomId);
+    		return new ResponseEntity<>(roomUsers, HttpStatus.OK);
+    	}
+    	catch (Exception e) {
+			return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+    }
+    
+    @GetMapping("/{roomId}/transactions/categories/{category}")
+    public ResponseEntity<?> getTransactionsByCategory(@PathVariable("roomId") long roomId, @PathVariable("category") String category) {
+    	try {
+    		List<RoomTransactions> roomTransactions = transactionService.getRoomTransactionsByCatgeory(roomId, category);
+    		return new ResponseEntity<>(roomTransactions, HttpStatus.OK);
+    	}
+    	catch (Exception e) {
+			return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+		}
     }
 
 }

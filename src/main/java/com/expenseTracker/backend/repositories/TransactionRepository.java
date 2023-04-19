@@ -27,5 +27,11 @@ public interface TransactionRepository extends JpaRepository<TransactionEntity,L
 	    nativeQuery = true
     )
     List<RoomTransactions> getRoomTransactions(@Param("roomId") long roomId);
+    
+    @Query(
+    	value = "SELECT t.id as transactionid, * FROM transactions t JOIN users u on t.userid = u.id WHERE t.room_id = :roomId and t.category = :category",
+    	nativeQuery = true
+    )
+    List<RoomTransactions> getRoomTransactionsByCategory(@Param("roomId") long roomId, @Param("category") String category);
 
 }

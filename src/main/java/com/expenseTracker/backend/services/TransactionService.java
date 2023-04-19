@@ -108,5 +108,11 @@ public class TransactionService {
     public List<RoomTransactions> getTransactionsByRoomIdWithUsername(long roomId) {
     	return transactionRepository.getRoomTransactions(roomId);
     }
+    
+    
+    public List<RoomTransactions> getRoomTransactionsByCatgeory(long roomId, String catgeory) {
+    	List<RoomTransactions> roomTransactions = transactionRepository.getRoomTransactionsByCategory(roomId, catgeory);
+    	return roomTransactions;
+    }
 
 }

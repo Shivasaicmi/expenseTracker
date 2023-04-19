@@ -7,6 +7,8 @@ import org.springframework.beans.factory.annotation.Value;
 public interface RoomTransactions {
 	
 	@Value("#{target.transactionid}")
+	Long setTransactionId();
+	
 	Long getTransactionId();
 	
 	@Value("#{target.title}")
