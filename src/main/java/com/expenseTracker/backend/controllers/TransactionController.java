@@ -2,6 +2,7 @@ package com.expenseTracker.backend.controllers;
 
 import com.expenseTracker.backend.entities.TransactionEntity;
 import com.expenseTracker.backend.models.ErrorResponse;
+import com.expenseTracker.backend.models.RoomTransactionModel;
 import com.expenseTracker.backend.services.TransactionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -60,11 +61,22 @@ public class TransactionController {
 	public ResponseEntity<?> getTranasactionsByRoomId(@PathVariable Long roomId,@PathVariable Long userId)
 	{
 		try{
-			 List<TransactionEntity> transactions = transactionService.getTransactionsByRoomId(roomId,userId);
+			 List<RoomTransactionModel> transactions = transactionService.getTransactionsByRoomId(roomId,userId);
 			 return new ResponseEntity<>(transactions,HttpStatus.OK);
 		}
 		catch (Exception exc){
 			return new ResponseEntity<>(exc.getMessage(),HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+	}
+
+	@GetMapping("/rooms/{roomId}/username/{userName}")
+	public ResponseEntity<?> getRoomTransactionsByUsername(@PathVariable Long roomId,@PathVariable String userName){
+		try{
+			List<RoomTransactionModel> roomTransactionsOfUser= transactionService.getRoomTransactionsByUserName(roomId,userName);
+			return new ResponseEntity<>(roomTransactionsOfUser,HttpStatus.OK);
+		}
+		catch (Exception exc){
+			return new ResponseEntity<>(exc.getMessage(),HttpStatus.BAD_REQUEST);
 		}
 	}
 

@@ -3,8 +3,9 @@ package com.expenseTracker.backend.services;
 import com.expenseTracker.backend.customExceptions.CategoryNotFoundException;
 import com.expenseTracker.backend.entities.TransactionEntity;
 import com.expenseTracker.backend.entities.UserRoomsEntity;
-import com.expenseTracker.backend.models.RoomTransactions;
-import com.expenseTracker.backend.models.RoomTransactions;
+
+import com.expenseTracker.backend.models.RoomTransactionModel;
+
 import com.expenseTracker.backend.repositories.RoomsRepository;
 import com.expenseTracker.backend.repositories.TransactionRepository;
 import com.expenseTracker.backend.repositories.UserRoomsRepository;
@@ -89,9 +90,9 @@ public class TransactionService {
     }
 
     @Transactional
-    public List<TransactionEntity> getTransactionsByRoomId(Long roomId,Long userId) throws Exception {
+    public List<RoomTransactionModel> getTransactionsByRoomId(Long roomId,Long userId) throws Exception {
         if(isUserBelongsToRoom(roomId,userId)){
-           Optional<List<TransactionEntity>> transactionEntitiesResult = transactionRepository.findByUseridAndRoomid(userId,roomId);
+           Optional<List<RoomTransactionModel>> transactionEntitiesResult = transactionRepository.findByRoomId(roomId);
            if(transactionEntitiesResult.isPresent()){
                return transactionEntitiesResult.get();
            }
@@ -113,6 +114,11 @@ public class TransactionService {
     public List<RoomTransactions> getRoomTransactionsByCatgeory(long roomId, String catgeory) {
     	List<RoomTransactions> roomTransactions = transactionRepository.getRoomTransactionsByCategory(roomId, catgeory);
     	return roomTransactions;
+    }
+
+    public List<RoomTransactionModel> getRoomTransactionsByUserName(Long roomId,String userName) {
+        List<RoomTransactionModel> roomTransactionsOfUser = transactionRepository.findRoomTransactionsByUserName(userName,roomId);
+        return roomTransactionsOfUser;
     }
 
 }
