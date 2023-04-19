@@ -1,7 +1,9 @@
 package com.expenseTracker.backend.repositories;
 
 import com.expenseTracker.backend.entities.TransactionEntity;
+
 import com.expenseTracker.backend.models.RoomTransactionModel;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -15,6 +17,7 @@ public interface TransactionRepository extends JpaRepository<TransactionEntity,L
     Optional<List<TransactionEntity>> findByUserId(Long userId);
 
     @Query(
+
             value = "SELECT \n" +
                     "\tt.id as transactionId,\n" +
                     "\tt.added_on,\n" +
@@ -43,5 +46,12 @@ public interface TransactionRepository extends JpaRepository<TransactionEntity,L
             nativeQuery = true
     )
     List<RoomTransactionModel> findRoomTransactionsByUserName(@Param("userName") String userName, @Param("roomId") Long roomId);
+
+    
+    @Query(
+    	value = "SELECT t.id as transactionId, * FROM transactions t JOIN users u on t.userid = u.id WHERE t.room_id = :roomId and t.category = :category",
+    	nativeQuery = true
+    )
+    List<RoomTransactionModel> getRoomTransactionsByCategory(@Param("roomId") long roomId, @Param("category") String category);
 
 }

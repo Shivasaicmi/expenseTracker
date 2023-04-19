@@ -8,6 +8,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import com.expenseTracker.backend.customExceptions.BudgetAlreadyFoundException;
+import com.expenseTracker.backend.customExceptions.BudgetNotFoundException;
 import com.expenseTracker.backend.customExceptions.CategoryNotFoundException;
 import com.expenseTracker.backend.customExceptions.UserNotFoundException;
 import com.expenseTracker.backend.entities.BudgetEntity;
@@ -87,6 +88,17 @@ public class BudgetService {
 			return true;
 		else 
 			return false;
+	}
+	
+	public void deleteBudgetForUser(long userId, String category) throws BudgetNotFoundException {
+		BudgetEntity savedBudget = budgetRepository.findByUserIdAndCategory(userId, category);
+		System.out.println(savedBudget);
+		if(savedBudget!=null) {
+			budgetRepository.delete(savedBudget);
+		}
+		else {
+			throw new BudgetNotFoundException("Budget for catgeory "+category+" not found for userId "+userId);
+		}
 	}
 
 }
