@@ -46,8 +46,14 @@ public class TransactionEntity {
     @JoinColumn(name="room_id",referencedColumnName = "id",updatable = false,insertable = false)
     private RoomEntity room;
 
+    @Column(name="group_id")
+    private Long groupId;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name="group_id",referencedColumnName = "group_id",updatable = false,insertable = false)
+    private GroupEntity group;
 
+    @JsonIgnore
     public UserEntity getUser() {
         return user;
     }
@@ -130,6 +136,22 @@ public class TransactionEntity {
         this.roomId = roomId;
     }
 
+    public Long getGroupId() {
+        return groupId;
+    }
+
+    public void setGroupId(Long groupId) {
+        this.groupId = groupId;
+    }
+
+    @JsonIgnore
+    public GroupEntity getGroup() {
+        return group;
+    }
+
+    public void setGroup(GroupEntity group) {
+        this.group = group;
+    }
 
     @JsonIgnore
     public RoomEntity getRoom() {

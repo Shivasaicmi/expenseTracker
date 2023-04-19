@@ -47,9 +47,11 @@ public class TransactionController {
 	}
 
 	@PostMapping("/rooms/{roomId}")
-	public ResponseEntity<?> addTransactionInRoom(@RequestBody TransactionEntity transactionEntity,@PathVariable Long roomId){
+	public ResponseEntity<?> addTransactionInRoom(@RequestBody TransactionEntity newTransaction,@PathVariable Long roomId){
 		try{
-			transactionService.addTransactionByRoomId(transactionEntity,roomId);
+			newTransaction.setGroup(null);
+			newTransaction.setGroupId(null);
+			transactionService.addTransactionByRoomId(newTransaction,roomId);
 			return new ResponseEntity<>("added transaction under RoomId "+roomId,HttpStatus.OK);
 		}
 		catch (Exception exc){
@@ -77,6 +79,17 @@ public class TransactionController {
 		}
 		catch (Exception exc){
 			return new ResponseEntity<>(exc.getMessage(),HttpStatus.BAD_REQUEST);
+		}
+	}
+
+	@PostMapping("/groups")
+	public ResponseEntity<?> addTransactionInGroup( @RequestBody TransactionEntity newTransaction){
+		try{
+			TransactionEntity savedTransaction = transactionService.addTransactionInGroup(newTransaction);
+			return new ResponseEntity<>(savedTransaction,HttpStatus.OK);
+		}
+		catch (Exception exc){
+			return new ResponseEntity<>(exc.getMessage(),HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
 

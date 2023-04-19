@@ -6,9 +6,7 @@ import com.expenseTracker.backend.entities.UserRoomsEntity;
 
 import com.expenseTracker.backend.models.RoomTransactionModel;
 
-import com.expenseTracker.backend.repositories.RoomsRepository;
-import com.expenseTracker.backend.repositories.TransactionRepository;
-import com.expenseTracker.backend.repositories.UserRoomsRepository;
+import com.expenseTracker.backend.repositories.*;
 import jakarta.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,12 +25,24 @@ public class TransactionService {
 
     private RoomsRepository roomsRepository;
 
+    private GroupsRepository groupsRepository;
+
+    private UserGroupsRepository userGroupsRepository;
+
+    private UserGroupsService userGroupsService;
+
+    private GroupsService groupsService;
+
     @Autowired
-    public TransactionService(TransactionRepository transactionRepository,UserRoomsRepository userRoomsRepository,RoomsRepository roomsRepository, BudgetService budgetService){
+    public TransactionService(GroupsService groupsService,UserGroupsService userGroupsService,TransactionRepository transactionRepository,UserRoomsRepository userRoomsRepository,RoomsRepository roomsRepository, BudgetService budgetService,GroupsRepository groupsRepository,UserGroupsRepository userGroupsRepository){
         this.transactionRepository = transactionRepository;
         this.userRoomsRepository = userRoomsRepository;
         this.roomsRepository = roomsRepository;
         this.budgetService = budgetService;
+        this.groupsRepository = groupsRepository;
+        this.userGroupsRepository = userGroupsRepository;
+        this.userGroupsService = userGroupsService;
+        this.groupsService = groupsService;
     }
 
     public TransactionEntity addTransaction(TransactionEntity newTransaction){
@@ -114,6 +124,18 @@ public class TransactionService {
     public List<RoomTransactionModel> getRoomTransactionsByUserName(Long roomId,String userName) {
         List<RoomTransactionModel> roomTransactionsOfUser = transactionRepository.findRoomTransactionsByUserName(userName,roomId);
         return roomTransactionsOfUser;
+    }
+
+    public TransactionEntity addTransactionInGroup(TransactionEntity newTransaction) throws Exception {
+        if(groupsService.isGroupOwner(newTransaction.getUserId(),newTransaction.getGroupId())){
+            throw new Exception("owner cannot make transactions in group");
+        }
+        if(!userGroupsService.userBelongsToGroup(newTransaction.getUserId(),newTransaction.getGroupId())){
+            throw new Exception("cannot add transaction under this group");
+        }
+        newTransaction.setCreatedOn(LocalDateTime.now());
+         TransactionEntity savedTransaction =  transactionRepository.save(newTransaction);
+        return savedTransaction;
     }
 
 }
