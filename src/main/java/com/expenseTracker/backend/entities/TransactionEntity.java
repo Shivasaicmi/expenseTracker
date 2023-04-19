@@ -46,10 +46,6 @@ public class TransactionEntity {
     @JoinColumn(name="room_id",referencedColumnName = "id",updatable = false,insertable = false)
     private RoomEntity room;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "group_id",updatable = false,insertable = false)
-    private SplitBillEntity splitBills;
-
 
 
     public UserEntity getUser() {
@@ -144,14 +140,6 @@ public class TransactionEntity {
         this.room = room;
     }
 
-    public SplitBillEntity getSplitBills() {
-        return splitBills;
-    }
-
-
-    public void setSplitBills(SplitBillEntity splitBills) {
-        this.splitBills = splitBills;
-    }
 
     @Override
     public String toString() {
