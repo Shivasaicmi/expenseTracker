@@ -12,7 +12,7 @@ public class GroupEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name="groupid")
+    @Column(name="group_id")
     private Long groupId;
 
     @Column(name="group_title")
