@@ -92,13 +92,8 @@ public class TransactionService {
     @Transactional
     public List<RoomTransactionModel> getTransactionsByRoomId(Long roomId,Long userId) throws Exception {
         if(isUserBelongsToRoom(roomId,userId)){
-           Optional<List<RoomTransactionModel>> transactionEntitiesResult = transactionRepository.findByRoomId(roomId);
-           if(transactionEntitiesResult.isPresent()){
-               return transactionEntitiesResult.get();
-           }
-           else{
-               throw  new Exception("no transactions found");
-           }
+           List<RoomTransactionModel> transactionEntitiesResult = transactionRepository.findByRoomId(roomId);
+           return transactionEntitiesResult;
         }
         else{
             throw new Exception("user doesnot belong to this room");
@@ -106,13 +101,13 @@ public class TransactionService {
     }
     
     @Transactional
-    public List<RoomTransactions> getTransactionsByRoomIdWithUsername(long roomId) {
-    	return transactionRepository.getRoomTransactions(roomId);
+    public List<RoomTransactionModel> getTransactionsByRoomIdWithUsername(long roomId) {
+    	return transactionRepository.findByRoomId(roomId);
     }
     
     
-    public List<RoomTransactions> getRoomTransactionsByCatgeory(long roomId, String catgeory) {
-    	List<RoomTransactions> roomTransactions = transactionRepository.getRoomTransactionsByCategory(roomId, catgeory);
+    public List<RoomTransactionModel> getRoomTransactionsByCatgeory(long roomId, String catgeory) {
+    	List<RoomTransactionModel> roomTransactions = transactionRepository.getRoomTransactionsByCategory(roomId, catgeory);
     	return roomTransactions;
     }
 

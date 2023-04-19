@@ -2,9 +2,8 @@ package com.expenseTracker.backend.controllers;
 
 import com.expenseTracker.backend.entities.RoomEntity;
 import com.expenseTracker.backend.entities.UserRoomsEntity;
-import com.expenseTracker.backend.models.RoomTransactions;
+import com.expenseTracker.backend.models.RoomTransactionModel;
 import com.expenseTracker.backend.models.RoomUsers;
-import com.expenseTracker.backend.models.RoomTransactions;
 import com.expenseTracker.backend.services.RoomService;
 import com.expenseTracker.backend.services.TransactionService;
 import com.expenseTracker.backend.services.UserRoomsService;
@@ -79,7 +78,7 @@ public class RoomsController {
     
     @GetMapping("/{roomId}/transactions")
     public ResponseEntity<?> getTransactionsWithUsername(@PathVariable("roomId") long roomId) {
-    	List<RoomTransactions> roomTransactions = transactionService.getTransactionsByRoomIdWithUsername(roomId);
+    	List<RoomTransactionModel> roomTransactions = transactionService.getTransactionsByRoomIdWithUsername(roomId);
     	return new ResponseEntity<>(roomTransactions,HttpStatus.OK);
     }
     
@@ -97,7 +96,7 @@ public class RoomsController {
     @GetMapping("/{roomId}/transactions/categories/{category}")
     public ResponseEntity<?> getTransactionsByCategory(@PathVariable("roomId") long roomId, @PathVariable("category") String category) {
     	try {
-    		List<RoomTransactions> roomTransactions = transactionService.getRoomTransactionsByCatgeory(roomId, category);
+    		List<RoomTransactionModel> roomTransactions = transactionService.getRoomTransactionsByCatgeory(roomId, category);
     		return new ResponseEntity<>(roomTransactions, HttpStatus.OK);
     	}
     	catch (Exception e) {

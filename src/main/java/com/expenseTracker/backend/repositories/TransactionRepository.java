@@ -30,7 +30,7 @@ public interface TransactionRepository extends JpaRepository<TransactionEntity,L
                     "FROM transactions t,users u WHERE t.room_id=:roomId AND t.userid=u.id;",
             nativeQuery = true
     )
-    Optional<List<RoomTransactionModel>> findByRoomId(Long roomId);
+    List<RoomTransactionModel> findByRoomId(Long roomId);
 
     @Query(
             value="SELECT \n" +
