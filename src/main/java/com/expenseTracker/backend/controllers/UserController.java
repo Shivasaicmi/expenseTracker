@@ -25,8 +25,6 @@ import java.util.List;
 @RequestMapping("/users")
 public class UserController {
 
-
-
 	private UserService userService;
     private TransactionService transactionService;
     private BudgetService budgetService;

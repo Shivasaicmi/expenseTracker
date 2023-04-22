@@ -2,6 +2,7 @@ package com.expenseTracker.backend.controllers;
 
 import com.expenseTracker.backend.entities.TransactionEntity;
 import com.expenseTracker.backend.models.ErrorResponse;
+import com.expenseTracker.backend.models.GroupTransactionModel;
 import com.expenseTracker.backend.models.RoomTransactionModel;
 import com.expenseTracker.backend.services.TransactionService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -93,9 +94,15 @@ public class TransactionController {
 		}
 	}
 
+	@GetMapping("/groups/{groupId}")
+	public ResponseEntity<?> getTransactionsByGroupId(@PathVariable long groupId){
+		try{
+			List<GroupTransactionModel> transactions = transactionService.getTransactionsByGroupId(groupId);
+			return new ResponseEntity<>(transactions,HttpStatus.OK);
+		}
+		catch (Exception e){
+			return new ResponseEntity<>(e.getMessage(),HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+	}
+	
 }
-
-// get all transactions of a room
-
-// reset expenditure to 0
-// get list of rooms under his id

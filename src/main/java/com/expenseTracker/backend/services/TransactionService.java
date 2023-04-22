@@ -4,6 +4,7 @@ import com.expenseTracker.backend.customExceptions.CategoryNotFoundException;
 import com.expenseTracker.backend.entities.TransactionEntity;
 import com.expenseTracker.backend.entities.UserRoomsEntity;
 
+import com.expenseTracker.backend.models.GroupTransactionModel;
 import com.expenseTracker.backend.models.RoomTransactionModel;
 
 import com.expenseTracker.backend.repositories.*;
@@ -109,13 +110,13 @@ public class TransactionService {
             throw new Exception("user doesnot belong to this room");
         }
     }
-    
+
     @Transactional
     public List<RoomTransactionModel> getTransactionsByRoomIdWithUsername(long roomId) {
     	return transactionRepository.findByRoomId(roomId);
     }
-    
-    
+
+
     public List<RoomTransactionModel> getRoomTransactionsByCatgeory(long roomId, String catgeory) {
     	List<RoomTransactionModel> roomTransactions = transactionRepository.getRoomTransactionsByCategory(roomId, catgeory);
     	return roomTransactions;
@@ -136,6 +137,11 @@ public class TransactionService {
         newTransaction.setCreatedOn(LocalDateTime.now());
          TransactionEntity savedTransaction =  transactionRepository.save(newTransaction);
         return savedTransaction;
+    }
+
+    public List<GroupTransactionModel> getTransactionsByGroupId(Long groupId){
+        List<GroupTransactionModel> transactions = groupsRepository.getTransactionsByGroupId(groupId);
+        return transactions;
     }
 
 }
