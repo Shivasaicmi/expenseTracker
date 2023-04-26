@@ -38,6 +38,8 @@ public class UserService {
     // login the user
     public UserEntity userLogin(UserEntity user) throws UserNotFoundException {
        Optional<UserEntity> result =  userRepository.findByUserNameAndPassword(user.getUserName(),user.getPassword());
+        System.out.println("\n====================calling from service layer===============\n");
+       testingAop();
        if(result.isPresent()){
            return result.get();
        }
@@ -45,7 +47,12 @@ public class UserService {
            throw new UserNotFoundException("Wrong credentials");
        }
     }
-    
+
+    public void testingAop(){
+        System.out.println("testing the sop function with a plain function");
+    }
+
+
     //get the user by username
     public UserEntity getUserByUsername(String username) {
  	   Optional<UserEntity> user = userRepository.findByUserName(username);
@@ -55,4 +62,6 @@ public class UserService {
  	   else
  		   return null;
     }
+
+
 }

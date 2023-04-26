@@ -14,7 +14,7 @@ public class BillsEntity {
     private Long id;
 
     @Column(name="userid")
-    private Long userid;
+    private Long userId;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="userid",updatable = false,insertable = false)
