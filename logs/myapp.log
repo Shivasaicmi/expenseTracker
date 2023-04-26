@@ -1,4 +1,0 @@
-2023-04-26 16:49:20,840 INFO o.s.b.StartupInfoLogger [restartedMain] Starting BackendApplication using Java 17.0.6 with PID 22008 (C:\Users\shivasaip\Desktop\expenseTracker\target\classes started by shivasaip in C:\Users\shivasaip\Desktop\expenseTracker)
-2023-04-26 16:49:20,867 INFO o.s.b.SpringApplication [restartedMain] No active profile set, falling back to 1 default profile: "default"
-2023-04-26 16:49:30,080 INFO o.s.b.StartupInfoLogger [restartedMain] Started BackendApplication in 9.892 seconds (process running for 11.323)
-2023-04-26 16:50:02,820 ERROR c.e.b.c.UserController [http-nio-8080-exec-1] hello from login controller
