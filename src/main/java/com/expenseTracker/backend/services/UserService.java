@@ -38,18 +38,12 @@ public class UserService {
     // login the user
     public UserEntity userLogin(UserEntity user) throws UserNotFoundException {
        Optional<UserEntity> result =  userRepository.findByUserNameAndPassword(user.getUserName(),user.getPassword());
-        System.out.println("\n====================calling from service layer===============\n");
-       testingAop();
        if(result.isPresent()){
            return result.get();
        }
        else{
            throw new UserNotFoundException("Wrong credentials");
        }
-    }
-
-    public void testingAop(){
-        System.out.println("testing the sop function with a plain function");
     }
 
 

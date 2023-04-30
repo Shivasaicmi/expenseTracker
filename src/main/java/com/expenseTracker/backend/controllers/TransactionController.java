@@ -93,6 +93,18 @@ public class TransactionController {
 			return new ResponseEntity<>(exc.getMessage(),HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
+	@GetMapping("/users/{userId}")
+	public ResponseEntity<?> getTransactionsByUserId(@PathVariable Long userId){
+
+		try{
+			List<TransactionEntity> transactions = transactionService.getTransactionsByUserId(userId);
+			return new ResponseEntity<>(transactions,HttpStatus.OK);
+		}
+		catch (Exception exc){
+			ErrorResponse error = new ErrorResponse(HttpStatus.NOT_FOUND, exc.getMessage());
+			return new ResponseEntity<>(error,HttpStatus.NOT_FOUND);
+		}
+	}
 
 	@GetMapping("/groups/{groupId}")
 	public ResponseEntity<?> getTransactionsByGroupId(@PathVariable long groupId){

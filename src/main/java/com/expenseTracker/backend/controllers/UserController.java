@@ -21,7 +21,6 @@ import java.util.List;
 @RestController
 @RequestMapping("/users")
 public class UserController {
-    private static final Logger logger = LoggerFactory.getLogger(UserController.class);
 	private UserService userService;
     private TransactionService transactionService;
     private BudgetService budgetService;
@@ -49,7 +48,6 @@ public class UserController {
   
   @PostMapping("/login")
   public ResponseEntity<?> userLogin(@RequestBody UserEntity user){
-        logger.error("hello from login controller");
        try{
            UserEntity userFound = userService.userLogin(user);
             return new ResponseEntity<>(userFound, HttpStatus.OK);
@@ -60,18 +58,6 @@ public class UserController {
         }
     }
 
-    @GetMapping("/transactions/{userId}")
-    public ResponseEntity<?> getTransactionsByUserId(@PathVariable Long userId){
-
-        try{
-            List<TransactionEntity> transactions = transactionService.getTransactionsByUserId(userId);
-            return new ResponseEntity<>(transactions,HttpStatus.OK);
-        }
-        catch (Exception exc){
-            ErrorResponse error = new ErrorResponse(HttpStatus.NOT_FOUND, exc.getMessage());
-            return new ResponseEntity<>(error,HttpStatus.NOT_FOUND);
-        }
-    }
     
     @GetMapping("budgets/{userId}")
 	public ResponseEntity<?> getBudgetsByUserId(@PathVariable Long userId) {
