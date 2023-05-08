@@ -1,52 +1,27 @@
-2023-04-30 05:36:34,509 INFO c.e.b.a.L.LoggingRequests [http-nio-8080-exec-1] Received POST request for URL: http://localhost:8080/users/login
-2023-04-30 05:36:34,511 DEBUG c.e.b.a.L.LoggingRequests [http-nio-8080-exec-1]  Method : ResponseEntity com.expenseTracker.backend.controllers.UserController.userLogin(UserEntity)
-2023-04-30 05:36:34,512 DEBUG c.e.b.a.L.LoggingRequests [http-nio-8080-exec-1] UserEntity{userid=null, username='shivasai', password='shivasai'}
-2023-04-30 05:36:34,516 INFO c.e.b.a.L.LoggingServiceMethods [http-nio-8080-exec-1] ServiceMethod : UserEntity com.expenseTracker.backend.services.UserService.userLogin(UserEntity)
-2023-04-30 05:36:34,517 INFO c.e.b.a.L.LoggingServiceMethods [http-nio-8080-exec-1] Args : 
-2023-04-30 05:36:34,517 DEBUG c.e.b.a.L.LoggingServiceMethods [http-nio-8080-exec-1] UserEntity{userid=null, username='shivasai', password='shivasai'}
-2023-04-30 05:36:34,520 DEBUG c.e.b.a.L.LogginJPAMethods [http-nio-8080-exec-1] Jpa Method Optional com.expenseTracker.backend.repositories.UserRepository.findByUserNameAndPassword(String,String)
-2023-04-30 05:36:34,520 DEBUG c.e.b.a.L.LogginJPAMethods [http-nio-8080-exec-1] shivasai
-2023-04-30 05:36:34,657 DEBUG c.e.b.a.L.LoggingServiceMethods [http-nio-8080-exec-1] Successfully done ServiceMethodExecution
-2023-04-30 05:36:34,660 DEBUG c.e.b.a.L.LoggingServiceMethods [http-nio-8080-exec-1] Execution time : 0.014
-2023-04-30 05:36:34,667 INFO c.e.b.a.L.LoggingRequests [http-nio-8080-exec-1] successfully responded 
-2023-04-30 05:36:34,667 DEBUG c.e.b.a.L.LoggingRequests [http-nio-8080-exec-1] ResponseEntity com.expenseTracker.backend.controllers.UserController.userLogin(UserEntity)
-2023-04-30 05:37:56,089 INFO c.e.b.a.L.LoggingRequests [http-nio-8080-exec-5] Received GET request for URL: http://localhost:8080/transactions/groups/1
-2023-04-30 05:37:56,090 INFO c.e.b.a.L.LoggingRequests [http-nio-8080-exec-5]  Method : ResponseEntity com.expenseTracker.backend.controllers.TransactionController.getTransactionsByGroupId(long)
-2023-04-30 05:37:56,090 DEBUG c.e.b.a.L.LoggingRequests [http-nio-8080-exec-5] 1
-2023-04-30 05:37:56,091 INFO c.e.b.a.L.LoggingServiceMethods [http-nio-8080-exec-5] ServiceMethod : List com.expenseTracker.backend.services.TransactionService.getTransactionsByGroupId(Long)
-2023-04-30 05:37:56,091 INFO c.e.b.a.L.LoggingServiceMethods [http-nio-8080-exec-5] Args : 
-2023-04-30 05:37:56,091 DEBUG c.e.b.a.L.LoggingServiceMethods [http-nio-8080-exec-5] 1
-2023-04-30 05:37:56,092 DEBUG c.e.b.a.L.LogginJPAMethods [http-nio-8080-exec-5] Jpa Method List com.expenseTracker.backend.repositories.GroupsRepository.getTransactionsByGroupId(Long)
-2023-04-30 05:37:56,092 DEBUG c.e.b.a.L.LogginJPAMethods [http-nio-8080-exec-5] 1
-2023-04-30 05:37:56,169 DEBUG c.e.b.a.L.LoggingServiceMethods [http-nio-8080-exec-5] Successfully done ServiceMethodExecution
-2023-04-30 05:37:56,169 DEBUG c.e.b.a.L.LoggingServiceMethods [http-nio-8080-exec-5] Execution time : 0.0078000000000000005
-2023-04-30 05:37:56,170 INFO c.e.b.a.L.LoggingRequests [http-nio-8080-exec-5] successfully responded 
-2023-04-30 05:37:56,170 DEBUG c.e.b.a.L.LoggingRequests [http-nio-8080-exec-5] ResponseEntity com.expenseTracker.backend.controllers.TransactionController.getTransactionsByGroupId(long)
-2023-04-30 05:39:23,058 INFO o.s.b.StartupInfoLogger [restartedMain] Starting BackendApplication using Java 18.0.2 with PID 52274 (/Users/shivasai/Desktop/projects/expenseTracker/target/classes started by shivasai in /Users/shivasai/Desktop/projects/expenseTracker)
-2023-04-30 05:39:23,078 DEBUG o.s.b.StartupInfoLogger [restartedMain] Running with Spring Boot v3.0.5, Spring v6.0.7
-2023-04-30 05:39:23,079 INFO o.s.b.SpringApplication [restartedMain] No active profile set, falling back to 1 default profile: "default"
-2023-04-30 05:39:34,851 INFO o.s.b.StartupInfoLogger [restartedMain] Started BackendApplication in 12.645 seconds (process running for 14.58)
-2023-04-30 05:39:55,971 INFO c.e.b.a.L.LoggingRequests [http-nio-8080-exec-1] Received GET request for URL: http://localhost:8080/transactions/groups/1
-2023-04-30 05:39:55,975 INFO c.e.b.a.L.LoggingRequests [http-nio-8080-exec-1]  Method : ResponseEntity com.expenseTracker.backend.controllers.TransactionController.getTransactionsByGroupId(long)
-2023-04-30 05:39:55,976 DEBUG c.e.b.a.L.LoggingRequests [http-nio-8080-exec-1] 1
-2023-04-30 05:39:55,981 INFO c.e.b.a.L.LoggingServiceMethods [http-nio-8080-exec-1] ServiceMethod : List com.expenseTracker.backend.services.TransactionService.getTransactionsByGroupId(Long)
-2023-04-30 05:39:55,982 INFO c.e.b.a.L.LoggingServiceMethods [http-nio-8080-exec-1] Args : 
-2023-04-30 05:39:55,982 DEBUG c.e.b.a.L.LoggingServiceMethods [http-nio-8080-exec-1] 1
-2023-04-30 05:39:56,001 DEBUG c.e.b.a.L.LogginJPAMethods [http-nio-8080-exec-1] Jpa Method List com.expenseTracker.backend.repositories.GroupsRepository.getTransactionsByGroupId(Long)
-2023-04-30 05:39:56,002 DEBUG c.e.b.a.L.LogginJPAMethods [http-nio-8080-exec-1] 1
-2023-04-30 05:39:56,264 DEBUG c.e.b.a.L.LoggingServiceMethods [http-nio-8080-exec-1] Successfully done ServiceMethodExecution
-2023-04-30 05:39:56,282 DEBUG c.e.b.a.L.LoggingServiceMethods [http-nio-8080-exec-1] Execution time : 0.0284
-2023-04-30 05:39:56,298 INFO c.e.b.a.L.LoggingRequests [http-nio-8080-exec-1] successfully responded 
-2023-04-30 05:39:56,298 DEBUG c.e.b.a.L.LoggingRequests [http-nio-8080-exec-1] ResponseEntity com.expenseTracker.backend.controllers.TransactionController.getTransactionsByGroupId(long)
-2023-04-30 05:41:09,803 INFO c.e.b.a.L.LoggingRequests [http-nio-8080-exec-5] Received GET request for URL: http://localhost:8080/transactions/groups/1
-2023-04-30 05:41:09,804 INFO c.e.b.a.L.LoggingRequests [http-nio-8080-exec-5]  Method : ResponseEntity com.expenseTracker.backend.controllers.TransactionController.getTransactionsByGroupId(long)
-2023-04-30 05:41:09,805 DEBUG c.e.b.a.L.LoggingRequests [http-nio-8080-exec-5] 1
-2023-04-30 05:41:09,805 INFO c.e.b.a.L.LoggingServiceMethods [http-nio-8080-exec-5] ServiceMethod : List com.expenseTracker.backend.services.TransactionService.getTransactionsByGroupId(Long)
-2023-04-30 05:41:09,805 INFO c.e.b.a.L.LoggingServiceMethods [http-nio-8080-exec-5] Args : 
-2023-04-30 05:41:09,805 DEBUG c.e.b.a.L.LoggingServiceMethods [http-nio-8080-exec-5] 1
-2023-04-30 05:41:09,806 DEBUG c.e.b.a.L.LogginJPAMethods [http-nio-8080-exec-5] Jpa Method List com.expenseTracker.backend.repositories.GroupsRepository.getTransactionsByGroupId(Long)
-2023-04-30 05:41:09,806 DEBUG c.e.b.a.L.LogginJPAMethods [http-nio-8080-exec-5] 1
-2023-04-30 05:41:09,827 DEBUG c.e.b.a.L.LoggingServiceMethods [http-nio-8080-exec-5] Successfully done ServiceMethodExecution
-2023-04-30 05:41:09,828 DEBUG c.e.b.a.L.LoggingServiceMethods [http-nio-8080-exec-5] Execution time : 0.0023000000000000004
-2023-04-30 05:41:09,828 INFO c.e.b.a.L.LoggingRequests [http-nio-8080-exec-5] successfully responded 
-2023-04-30 05:41:09,828 DEBUG c.e.b.a.L.LoggingRequests [http-nio-8080-exec-5] ResponseEntity com.expenseTracker.backend.controllers.TransactionController.getTransactionsByGroupId(long)
+2023-05-08 22:53:47,608 INFO o.s.b.StartupInfoLogger [restartedMain] Starting BackendApplication using Java 18.0.2 with PID 1802 (/Users/shivasai/Desktop/projects/expenseTracker/target/classes started by shivasai in /Users/shivasai/Desktop/projects/expenseTracker)
+2023-05-08 22:53:47,658 DEBUG o.s.b.StartupInfoLogger [restartedMain] Running with Spring Boot v3.0.5, Spring v6.0.7
+2023-05-08 22:53:47,660 INFO o.s.b.SpringApplication [restartedMain] No active profile set, falling back to 1 default profile: "default"
+2023-05-08 22:53:52,413 DEBUG o.s.w.f.GenericFilterBean [restartedMain] Filter 'jwtAuthenticationFilter' configured for use
+2023-05-08 22:55:08,498 INFO o.s.b.StartupInfoLogger [restartedMain] Starting BackendApplication using Java 18.0.2 with PID 1829 (/Users/shivasai/Desktop/projects/expenseTracker/target/classes started by shivasai in /Users/shivasai/Desktop/projects/expenseTracker)
+2023-05-08 22:55:08,516 DEBUG o.s.b.StartupInfoLogger [restartedMain] Running with Spring Boot v3.0.5, Spring v6.0.7
+2023-05-08 22:55:08,518 INFO o.s.b.SpringApplication [restartedMain] No active profile set, falling back to 1 default profile: "default"
+2023-05-08 22:55:13,185 DEBUG o.s.w.f.GenericFilterBean [restartedMain] Filter 'jwtAuthenticationFilter' configured for use
+2023-05-08 23:01:34,232 INFO o.s.b.StartupInfoLogger [restartedMain] Starting BackendApplication using Java 18.0.2 with PID 1888 (/Users/shivasai/Desktop/projects/expenseTracker/target/classes started by shivasai in /Users/shivasai/Desktop/projects/expenseTracker)
+2023-05-08 23:01:34,250 DEBUG o.s.b.StartupInfoLogger [restartedMain] Running with Spring Boot v3.0.5, Spring v6.0.7
+2023-05-08 23:01:34,252 INFO o.s.b.SpringApplication [restartedMain] No active profile set, falling back to 1 default profile: "default"
+2023-05-08 23:01:38,910 DEBUG o.s.w.f.GenericFilterBean [restartedMain] Filter 'jwtAuthenticationFilter' configured for use
+2023-05-08 23:14:44,145 INFO o.s.b.StartupInfoLogger [restartedMain] Starting BackendApplication using Java 18.0.2 with PID 1982 (/Users/shivasai/Desktop/projects/expenseTracker/target/classes started by shivasai in /Users/shivasai/Desktop/projects/expenseTracker)
+2023-05-08 23:14:44,160 DEBUG o.s.b.StartupInfoLogger [restartedMain] Running with Spring Boot v3.0.5, Spring v6.0.7
+2023-05-08 23:14:44,162 INFO o.s.b.SpringApplication [restartedMain] No active profile set, falling back to 1 default profile: "default"
+2023-05-08 23:14:52,531 DEBUG o.s.w.f.GenericFilterBean [restartedMain] Filter 'jwtAuthenticationFilter' configured for use
+2023-05-08 23:14:56,624 INFO o.s.b.StartupInfoLogger [restartedMain] Started BackendApplication in 13.299 seconds (process running for 15.233)
+2023-05-08 23:22:08,873 INFO o.s.b.StartupInfoLogger [restartedMain] Starting BackendApplication using Java 18.0.2 with PID 2059 (/Users/shivasai/Desktop/projects/expenseTracker/target/classes started by shivasai in /Users/shivasai/Desktop/projects/expenseTracker)
+2023-05-08 23:22:08,892 DEBUG o.s.b.StartupInfoLogger [restartedMain] Running with Spring Boot v3.0.5, Spring v6.0.7
+2023-05-08 23:22:08,894 INFO o.s.b.SpringApplication [restartedMain] No active profile set, falling back to 1 default profile: "default"
+2023-05-08 23:22:17,471 DEBUG o.s.w.f.GenericFilterBean [restartedMain] Filter 'jwtAuthenticationFilter' configured for use
+2023-05-08 23:22:21,529 INFO o.s.b.StartupInfoLogger [restartedMain] Started BackendApplication in 13.503 seconds (process running for 15.447)
+2023-05-08 23:32:44,782 INFO o.s.b.StartupInfoLogger [restartedMain] Starting BackendApplication using Java 18.0.2 with PID 2208 (/Users/shivasai/Desktop/projects/expenseTracker/target/classes started by shivasai in /Users/shivasai/Desktop/projects/expenseTracker)
+2023-05-08 23:32:44,805 DEBUG o.s.b.StartupInfoLogger [restartedMain] Running with Spring Boot v3.0.5, Spring v6.0.7
+2023-05-08 23:32:44,806 INFO o.s.b.SpringApplication [restartedMain] No active profile set, falling back to 1 default profile: "default"
+2023-05-08 23:32:53,125 DEBUG o.s.w.f.GenericFilterBean [restartedMain] Filter 'jwtAuthenticationFilter' configured for use
+2023-05-08 23:32:56,993 INFO o.s.b.StartupInfoLogger [restartedMain] Started BackendApplication in 13.027 seconds (process running for 14.808)
