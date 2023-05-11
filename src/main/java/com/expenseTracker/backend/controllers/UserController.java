@@ -31,34 +31,7 @@ public class UserController {
         this.transactionService = transactionService;
         this.budgetService = budgetService;
     }
-    
-    
-	@PostMapping("/register")
-	public ResponseEntity<?> userRegister(@RequestBody UserEntity user) {
-		try {
-			UserEntity savedUser=userService.registerUser(user);
-			return new ResponseEntity<UserEntity>(savedUser,HttpStatus.OK);
-		}
-		catch(Exception e) {
-			ErrorResponse error = new ErrorResponse(HttpStatus.BAD_REQUEST,e.getMessage());
-            return new ResponseEntity<>(error,HttpStatus.BAD_REQUEST);
-		}
-	}
-  
-  
-  @PostMapping("/login")
-  public ResponseEntity<?> userLogin(@RequestBody UserEntity user){
-       try{
-           UserEntity userFound = userService.userLogin(user);
-            return new ResponseEntity<>(userFound, HttpStatus.OK);
-        }
-        catch (Exception e){
-            ErrorResponse error = new ErrorResponse(HttpStatus.NOT_FOUND,e.getMessage());
-            return new ResponseEntity<>(error,HttpStatus.NOT_FOUND);
-        }
-    }
-
-    
+	
     @GetMapping("budgets/{userId}")
 	public ResponseEntity<?> getBudgetsByUserId(@PathVariable Long userId) {
 		try {
