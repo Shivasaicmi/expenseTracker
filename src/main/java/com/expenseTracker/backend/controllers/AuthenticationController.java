@@ -32,27 +32,27 @@ public class AuthenticationController {
 
     @PostMapping("/login")
     public ResponseEntity<?> userLogin(@RequestBody UserEntity user){
-
+        System.out.println(user);
        authenticationManager.authenticate(
                new UsernamePasswordAuthenticationToken(
                        user.getUserEmail(),
                        user.getPassword()
                )
        );
-
-
+       String token = jwtService.generateToken(user);
+       return new ResponseEntity<>(token,HttpStatus.OK);
     }
 
     @PostMapping("/register")
     public ResponseEntity<?> userRegister(@RequestBody UserEntity user){
         try{
             user.setPassword(passwordEncoder.encode(user.getPassword()));
-            userService.userLogin(user);
+            userService.registerUser(user);
             String token = jwtService.generateToken(user);
-            return new ResponseEntity<>(token,HttpStatus.OK);
+            return new ResponseEntity<String>(token,HttpStatus.OK);
         }
         catch (Exception e){
-            return new ResponseEntity<>("failed to register the user",HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity<String>("failed to register the user",HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 

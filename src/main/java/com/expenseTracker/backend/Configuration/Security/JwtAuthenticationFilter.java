@@ -1,5 +1,6 @@
 package com.expenseTracker.backend.Configuration.Security;
 
+import com.expenseTracker.backend.entities.UserEntity;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -38,14 +39,16 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
        final String userEmail;
 
        if(authHeader==null||!authHeader.startsWith("Bearer ")){
-           response.sendError(HttpServletResponse.SC_UNAUTHORIZED,"missing authorization token");
+           filterChain.doFilter(request,response);
            return;
        }
        else{
             jwt = authHeader.substring(7);
-            userEmail = jwtService.extractUserName(jwt);
+            userEmail = jwtService.extractUserEmail(jwt);
             if(userEmail!=null&& SecurityContextHolder.getContext().getAuthentication()==null){
-                UserDetails userDetails = userDetailsService.loadUserByUsername(userEmail);
+
+                UserEntity userDetails = (UserEntity)userDetailsService.loadUserByUsername(userEmail);
+                System.out.println(userDetails);
                 if(jwtService.isTokenValid(jwt,userDetails)){
                     UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(
                       userDetails,

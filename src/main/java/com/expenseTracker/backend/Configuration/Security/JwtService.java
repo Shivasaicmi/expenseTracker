@@ -1,5 +1,6 @@
 package com.expenseTracker.backend.Configuration.Security;
 
+import com.expenseTracker.backend.entities.UserEntity;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
@@ -19,7 +20,7 @@ public class JwtService {
 
     private final String SECRET_KEY = "2F413F4428472B4B6250655368566D597133743677397A244326452948404D635166546A576E5A7234753778214125442A472D4A614E645267556B5870327335";
 
-    public String extractUserName(String token) {
+    public String extractUserEmail(String token) {
 
         return extractClaim(token,Claims::getSubject);
     }
@@ -34,13 +35,13 @@ public class JwtService {
     }
     public String generateToken(
             Map<String, Object> extraClaims,
-            UserDetails userDetails
+            UserEntity userDetails
     ){
 
         String token = Jwts.
                 builder()
                 .setClaims(extraClaims)
-                .setSubject(userDetails.getUsername())
+                .setSubject(userDetails.getUserEmail())
                 .setIssuedAt(new Date(System.currentTimeMillis()))
                 .setExpiration(new Date(System.currentTimeMillis() + 1000 *60 *24))
                 .signWith(getSigninKey(), SignatureAlgorithm.HS256)
@@ -48,13 +49,13 @@ public class JwtService {
         return token;
     }
 
-    public String generateToken(UserDetails userDetails){
+    public String generateToken(UserEntity userDetails){
         return generateToken(new HashMap<>(),userDetails);
     }
 
-    public boolean isTokenValid(String token,UserDetails userDetails){
-        final String username = extractUserName(token);
-        return (username.equals(userDetails.getUsername())) && !isTokenExpired(token);
+    public boolean isTokenValid(String token,UserEntity userDetails){
+        final String userEmail = extractUserEmail(token);
+        return (userEmail.equals(userDetails.getUserEmail())) && !isTokenExpired(token);
     }
 
     private boolean isTokenExpired(String token) {

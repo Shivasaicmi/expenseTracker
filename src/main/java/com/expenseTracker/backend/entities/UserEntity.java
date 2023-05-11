@@ -98,6 +98,7 @@ public class UserEntity implements UserDetails {
                 "userid=" + userId +
                 ", username='" + userName + '\'' +
                 ", password='" + password + '\'' +
+                ", userEmail='"+userEmail+ '\''+
                 '}';
     }
 }
