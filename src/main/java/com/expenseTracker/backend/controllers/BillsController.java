@@ -1,9 +1,11 @@
 package com.expenseTracker.backend.controllers;
 
 import com.expenseTracker.backend.entities.BillsEntity;
+import com.expenseTracker.backend.entities.UserEntity;
 import com.expenseTracker.backend.services.BillsService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -29,10 +31,12 @@ public class BillsController {
         }
     }
 
-    @GetMapping("/{userId}")
-    public ResponseEntity<?> getBills(@PathVariable("userId") Long userId){
+    @GetMapping("/")
+    public ResponseEntity<?> getBillsByUserId(@PathVariable("userId") Long userId, Authentication authenticationObj){
+
+        UserEntity authenticatedUser = (UserEntity)authenticationObj.getPrincipal();
         try{
-            List<BillsEntity> bills = billsService.getBills(userId);
+            List<BillsEntity> bills = billsService.getBills(authenticatedUser.getUserId());
             return new ResponseEntity<>(bills,HttpStatus.OK);
         }
         catch (Exception e){

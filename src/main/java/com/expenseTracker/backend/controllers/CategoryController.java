@@ -28,7 +28,6 @@ public class CategoryController {
 	@PutMapping("/")
 	public ResponseEntity<?> updateCategories(@RequestBody CategoriesEntity categories) {
 		try {
-			System.out.println(categories.toString());
 			categoriesService.updateCategories(categories);
 			CategoriesEntity saveCategories = categoriesService.findCategoriesByUserId(categories.getUserId());
 			return new ResponseEntity<>(saveCategories, HttpStatus.OK);

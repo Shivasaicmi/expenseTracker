@@ -1,6 +1,7 @@
 package com.expenseTracker.backend.controllers;
 
 import com.expenseTracker.backend.entities.RoomEntity;
+import com.expenseTracker.backend.entities.UserEntity;
 import com.expenseTracker.backend.entities.UserRoomsEntity;
 import com.expenseTracker.backend.models.RoomTransactionModel;
 import com.expenseTracker.backend.models.RoomUsers;
@@ -13,6 +14,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -30,10 +32,11 @@ public class RoomsController {
         this.transactionService = transactionService;
     }
 
-    @PostMapping("/{userId}")
-    public ResponseEntity<?> createRoom(@RequestBody RoomEntity room,@PathVariable Long userId){
+    @PostMapping("/")
+    public ResponseEntity<?> createRoom(@RequestBody RoomEntity room, Authentication authenticationObject){
+        UserEntity authenticatedUser = (UserEntity) authenticationObject.getPrincipal();
+        Long userId = authenticatedUser.getUserId();
         try{
-
             roomService.createRoom(room,userId);
             return new ResponseEntity<>("new room created",HttpStatus.OK);
         }

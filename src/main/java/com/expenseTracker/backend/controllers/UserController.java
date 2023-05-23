@@ -3,13 +3,9 @@ package com.expenseTracker.backend.controllers;
 
 import com.expenseTracker.backend.entities.BudgetEntity;
 import com.expenseTracker.backend.entities.TransactionEntity;
-import com.expenseTracker.backend.entities.UserEntity;
 import com.expenseTracker.backend.services.BudgetService;
 import com.expenseTracker.backend.services.TransactionService;
 import com.expenseTracker.backend.services.UserService;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -31,7 +27,7 @@ public class UserController {
         this.transactionService = transactionService;
         this.budgetService = budgetService;
     }
-	
+
     @GetMapping("budgets/{userId}")
 	public ResponseEntity<?> getBudgetsByUserId(@PathVariable Long userId) {
 		try {

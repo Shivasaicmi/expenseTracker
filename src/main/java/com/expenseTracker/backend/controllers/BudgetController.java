@@ -2,9 +2,11 @@ package com.expenseTracker.backend.controllers;
 
 import java.util.List;
 
+import com.expenseTracker.backend.entities.UserEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -31,7 +33,9 @@ public class BudgetController {
 	}
 	
 	@PostMapping("/")
-	public ResponseEntity<?> addBudget(@RequestBody BudgetEntity budget) {
+	public ResponseEntity<?> addBudget(@RequestBody BudgetEntity budget, Authentication authenticationObject) {
+		UserEntity authenticatedUser = (UserEntity)authenticationObject.getPrincipal();
+		budget.setUserId(authenticatedUser.getUserId());
 		try {
 			BudgetEntity savedBudget = budgetService.addBudget(budget);
 			return new ResponseEntity<>(savedBudget,HttpStatus.OK);

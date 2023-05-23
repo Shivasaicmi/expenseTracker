@@ -1,6 +1,7 @@
 package com.expenseTracker.backend.controllers;
 
 import com.expenseTracker.backend.entities.TransactionEntity;
+import com.expenseTracker.backend.entities.UserEntity;
 import com.expenseTracker.backend.models.ErrorResponse;
 import com.expenseTracker.backend.models.GroupTransactionModel;
 import com.expenseTracker.backend.models.RoomTransactionModel;
@@ -8,8 +9,10 @@ import com.expenseTracker.backend.services.TransactionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
+import java.security.Principal;
 import java.util.List;
 
 @RestController
@@ -24,7 +27,9 @@ public class TransactionController {
 	}
 
 	@PostMapping("/")
-	public ResponseEntity<?> addTransaction(@RequestBody TransactionEntity newTransaction) {
+	public ResponseEntity<?> addTransaction(@RequestBody TransactionEntity newTransaction, Authentication authenticationobject) {
+		UserEntity authenticatedUser = (UserEntity) authenticationobject.getPrincipal();
+		newTransaction.setUserId(authenticatedUser.getUserId());
 		try {
 			TransactionEntity transaction = transactionService.addTransaction(newTransaction);
 			return new ResponseEntity<>(transaction, HttpStatus.OK);
@@ -48,8 +53,14 @@ public class TransactionController {
 	}
 
 	@PostMapping("/rooms/{roomId}")
-	public ResponseEntity<?> addTransactionInRoom(@RequestBody TransactionEntity newTransaction,@PathVariable Long roomId){
+	public ResponseEntity<?> addTransactionInRoom(
+			@RequestBody TransactionEntity newTransaction,
+			@PathVariable Long roomId,
+			Authentication authenticationObject)
+	{
+		UserEntity authenticatedUser = (UserEntity)authenticationObject.getPrincipal();
 		try{
+			newTransaction.setUserId(authenticatedUser.getUserId());
 			newTransaction.setGroup(null);
 			newTransaction.setGroupId(null);
 			transactionService.addTransactionByRoomId(newTransaction,roomId);
@@ -60,9 +71,11 @@ public class TransactionController {
 		}
 	}
 
-	@GetMapping("/rooms/{roomId}/{userId}")
-	public ResponseEntity<?> getTranasactionsByRoomId(@PathVariable Long roomId,@PathVariable Long userId)
+	@GetMapping("/rooms/{roomId}")
+	public ResponseEntity<?> getTranasactionsByRoomId(@PathVariable Long roomId,Authentication authenticationObject)
 	{
+		UserEntity authenticatedUser = (UserEntity) authenticationObject.getPrincipal();
+		Long userId = authenticatedUser.getUserId();
 		try{
 			 List<RoomTransactionModel> transactions = transactionService.getTransactionsByRoomId(roomId,userId);
 			 return new ResponseEntity<>(transactions,HttpStatus.OK);
@@ -84,7 +97,9 @@ public class TransactionController {
 	}
 
 	@PostMapping("/groups")
-	public ResponseEntity<?> addTransactionInGroup( @RequestBody TransactionEntity newTransaction){
+	public ResponseEntity<?> addTransactionInGroup( @RequestBody TransactionEntity newTransaction,Authentication authenticationObject){
+		UserEntity authenticatedUser = (UserEntity) authenticationObject.getPrincipal();
+		newTransaction.setUserId(authenticatedUser.getUserId());
 		try{
 			TransactionEntity savedTransaction = transactionService.addTransactionInGroup(newTransaction);
 			return new ResponseEntity<>(savedTransaction,HttpStatus.OK);
@@ -93,8 +108,11 @@ public class TransactionController {
 			return new ResponseEntity<>(exc.getMessage(),HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
-	@GetMapping("/users/{userId}")
-	public ResponseEntity<?> getTransactionsByUserId(@PathVariable Long userId){
+	@GetMapping("/users")
+	public ResponseEntity<?> getTransactionsByUserId(Authentication authenticationObject){
+
+		UserEntity authenticatedUser = (UserEntity) authenticationObject.getPrincipal();
+		Long userId = authenticatedUser.getUserId();
 
 		try{
 			List<TransactionEntity> transactions = transactionService.getTransactionsByUserId(userId);
