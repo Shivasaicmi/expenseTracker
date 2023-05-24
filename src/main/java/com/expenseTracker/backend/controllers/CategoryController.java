@@ -1,10 +1,12 @@
 package com.expenseTracker.backend.controllers;
 
+import com.expenseTracker.backend.entities.UserEntity;
 import org.aspectj.weaver.NewConstructorTypeMunger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.query.Param;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
 import com.expenseTracker.backend.entities.CategoriesEntity;
@@ -26,10 +28,11 @@ public class CategoryController {
 	}
 
 	@PutMapping("/")
-	public ResponseEntity<?> updateCategories(@RequestBody CategoriesEntity categories) {
+	public ResponseEntity<?> updateCategories(@RequestBody CategoriesEntity categories, Authentication authentication) {
+		UserEntity user = (UserEntity) authentication.getPrincipal();
 		try {
 			categoriesService.updateCategories(categories);
-			CategoriesEntity saveCategories = categoriesService.findCategoriesByUserId(categories.getUserId());
+			CategoriesEntity saveCategories = categoriesService.findCategoriesByUserId(user.getUserId());
 			return new ResponseEntity<>(saveCategories, HttpStatus.OK);
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -38,10 +41,11 @@ public class CategoryController {
 		}
 	}
 
-	@GetMapping("/{userid}")
-	public ResponseEntity<?> getCategories(@PathVariable("userid") Long userId ){
+	@GetMapping("/")
+	public ResponseEntity<?> getCategories(Authentication authentication ){
+		UserEntity user = (UserEntity) authentication.getPrincipal();
 		try{
-			CategoriesEntity categories = categoriesService.findCategoriesByUserId(userId);
+			CategoriesEntity categories = categoriesService.findCategoriesByUserId(user.getUserId());
 			return new ResponseEntity<>(categories.getCategories(),HttpStatus.OK);
 		}
 		catch (Exception exc){

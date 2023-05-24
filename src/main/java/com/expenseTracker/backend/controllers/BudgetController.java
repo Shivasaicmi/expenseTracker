@@ -46,9 +46,10 @@ public class BudgetController {
 	}
 	
 	@PutMapping("/")
-	public ResponseEntity<?> updateTotalBudget(@RequestBody BudgetEntity budget) {
+	public ResponseEntity<?> updateTotalBudget(@RequestBody BudgetEntity budget, Authentication authentication) {
+		UserEntity user = (UserEntity) authentication.getPrincipal();
 		try {
-			BudgetEntity savedBudget = budgetService.updateTotalBudget(budget.getUserId(), budget.getCategory(), budget.getTotalBudget());
+			BudgetEntity savedBudget = budgetService.updateTotalBudget(user.getUserId(), budget.getCategory(), budget.getTotalBudget());
 			return new ResponseEntity<>(savedBudget,HttpStatus.OK);
 		}
 		catch(Exception e) {
@@ -58,9 +59,10 @@ public class BudgetController {
 	}
 	
 	@PutMapping("/refresh")
-	public ResponseEntity<?> refreshBudget(@RequestBody BudgetEntity budget) {
+	public ResponseEntity<?> refreshBudget(@RequestBody BudgetEntity budget, Authentication authentication) {
+		UserEntity user = (UserEntity) authentication.getPrincipal();
 		try {
-			List<BudgetEntity> savedBudgets = budgetService.refreshBudget(budget.getUserId());
+			List<BudgetEntity> savedBudgets = budgetService.refreshBudget(user.getUserId());
 			return new ResponseEntity<>(savedBudgets,HttpStatus.OK);
 		}
 		catch (Exception e) {
